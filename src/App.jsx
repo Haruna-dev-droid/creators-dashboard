@@ -1,15 +1,20 @@
 import { useState } from "react";
+import { BrowserRouter } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import Dashboard from "./components/FullSetup/Dashboard";
+import DashboardRouter from "./components/FullSetup/DashboardRouter";
 import "/src/index.css";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <Dashboard />
+      <BrowserRouter>
+        {" "}
+        <DashboardRouter />{" "}
+      </BrowserRouter>
+
       <NavBar />
       <LandingPage />
       <Footer />
