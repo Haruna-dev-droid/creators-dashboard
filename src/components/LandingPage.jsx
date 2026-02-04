@@ -2,6 +2,7 @@
 import React from "react";
 import Stats from "./Stats";
 import Cards from "./Cards";
+import DashboardPreview from "./DashboardPreview";
 import { PenTool, BarChart3, Lightbulb, CalendarClock } from "lucide-react";
 
 function LandingPage() {
@@ -17,7 +18,7 @@ function LandingPage() {
               <br />
               One <span>Dashboard.</span>
             </h1>
-            <p className="mt-6 text-xl lg:text-2xl text-neutral-700">
+            <p className="mt-5 text-xl lg:text-xl text-neutral-700">
               Track your projects, analytics, and earnings in one place. <br />
               Designed to help creators focus on what matters most. Insights,
               stats, and tools at your fingertips.
@@ -44,7 +45,7 @@ function LandingPage() {
           title="Content Editor"
           description="Create, edit, and polish your content in one distraction-free workspace."
           color={{
-            bg: "bg-gradient-to-r from-blue-800 via-blue-600 to-blue-500",
+            bg: "bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500",
             icon: "text-blue-400",
           }}
         />
@@ -54,7 +55,7 @@ function LandingPage() {
           title="Analytics"
           description="Track performance, engagement, and audience growth with clarity."
           color={{
-            bg: "bg-gradient-to-r from-green-800 via-green-600 to-green-500",
+            bg: "bg-gradient-to-r from-green-700 via-green-600 to-green-500",
             icon: "text-green-600",
           }}
         />
@@ -64,7 +65,7 @@ function LandingPage() {
           title="Ideas Board"
           description="Capture ideas and organize creative concepts effortlessly."
           color={{
-            bg: "bg-gradient-to-r from-yellow-800 via-yellow-600 to-yellow-500",
+            bg: "bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-500",
             icon: "text-yellow-600",
           }}
         />
@@ -74,10 +75,24 @@ function LandingPage() {
           title="Scheduling"
           description="Plan and schedule content ahead of time without the stress."
           color={{
-            bg: "bg-gradient-to-r from-purple-800 via-purple-600 to-purple-500",
+            bg: "bg-gradient-to-r from-purple-700 via-purple-600 to-purple-500",
             icon: "text-purple-600",
           }}
         />
+      </div>
+      <DashboardPreview />
+      <div className="md:mt-20 mt-15 mx-auto mb-30 px-5 md:px-10 py-10 flex flex-col justify-center items-center">
+        <h1 className="md:text-6xl text-5xl text-blue-950/90 text-center font-bold ">
+          Try CrtrsHub for free
+        </h1>
+        <div className="flex gap-4 mt-5 items-center">
+          <button className="border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+            Sign in
+          </button>
+          <button className="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
+            Sign up
+          </button>
+        </div>
       </div>
     </div>
   );
