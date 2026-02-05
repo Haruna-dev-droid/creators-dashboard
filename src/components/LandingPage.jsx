@@ -82,14 +82,14 @@ function LandingPage() {
       </div>
       <DashboardPreview />
       <div className="md:mt-20 mt-15 mx-auto mb-30 px-5 md:px-10 py-10 flex flex-col justify-center items-center">
-        <h1 className="md:text-6xl text-5xl text-blue-950/90 text-center font-bold ">
+        <h1 className="md:text-6xl text-5xl text-purple-950/90 text-center font-bold ">
           Try CrtrsHub for free
         </h1>
         <div className="flex gap-4 mt-5 items-center">
-          <button className="border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+          <button className="border border-purple-400 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors">
             Sign in
           </button>
-          <button className="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
+          <button className="bg-purple-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-purple-800 transition-colors">
             Sign up
           </button>
         </div>

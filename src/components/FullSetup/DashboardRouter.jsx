@@ -54,7 +54,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       </div>
 
       {/* Navigation Items */}
-      <nav className="flex-1 p-4 space-y-2 c">
+      <nav className="flex-1 p-4 space-y-2 text-sm">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
@@ -69,7 +69,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                   : "text-gray-300 hover:bg-slate-800 hover:text-white"
               }`}
             >
-              <Icon size={20} className="flex-shrink-0" />
+              <Icon size={16} className="flex-shrink-0" />
               {isOpen && <span className="font-medium">{item.name}</span>}
             </Link>
           );
@@ -102,7 +102,7 @@ function DashboardRouter() {
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto bg-blue-50">
+      <main className="flex-1 overflow-y-auto bg-blue-50/70">
         <div className="p-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
