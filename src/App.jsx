@@ -4,6 +4,7 @@ import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import DashboardRouter from "./components/FullSetup/DashboardRouter";
+import SignUp from "./components/SignUpAuth";
 import "/src/index.css";
 import "./App.css";
 
@@ -11,8 +12,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        {" "}
-        <DashboardRouter />{" "}
+        <SignUp /> <DashboardRouter />{" "}
       </BrowserRouter>
 
       <NavBar />
