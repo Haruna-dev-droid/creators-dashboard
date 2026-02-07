@@ -22,6 +22,16 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <NavBar />
+                <LandingPage />
+                <Footer />
+              </>
+            }
+          />
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignUp />} />
@@ -43,6 +53,7 @@ function App() {
               </ProtectedRoutes>
             }
           />
+
           <Route
             path="/aiassistant"
             element={
@@ -51,6 +62,7 @@ function App() {
               </ProtectedRoutes>
             }
           />
+          <Route path="/footer" element={<Footer />} />
 
           {/* Catch all - redirect to landing */}
           <Route path="*" element={<Navigate to="/" replace />} />
