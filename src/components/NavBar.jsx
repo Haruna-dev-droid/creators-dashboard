@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 export default function ResponsiveNavbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,14 +34,19 @@ export default function ResponsiveNavbar() {
           </ul>
 
           {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex gap-4 items-center">
-            <button className="border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
-              Sign in
-            </button>
-            <button className="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
-              Sign up
-            </button>
-          </div>
+          <NavLink
+            to="/signup"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            <div className="hidden md:flex gap-4 items-center">
+              <button className="border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+                Sign in
+              </button>
+              <button className="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
+                Sign up
+              </button>
+            </div>
+          </NavLink>
 
           {/* Mobile Hamburger Button */}
           <button
