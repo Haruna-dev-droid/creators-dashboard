@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, useLocation, NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
   FileEdit,
@@ -20,19 +20,29 @@ import AiAssistant from "../pages/AiAssistant";
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const navItems = [
-    { id: "dashboard", name: "Dashboard", icon: LayoutDashboard, path: "/" },
+    {
+      id: "dashboard",
+      name: "Dashboard",
+      icon: LayoutDashboard,
+      path: "/dashboardrouter",
+    },
     {
       id: "contenteditor",
       name: "Content Editor",
       icon: FileEdit,
-      path: "/contenteditor",
+      path: "/dashboardrouter/contenteditor",
     },
-    { id: "analytics", name: "Analytics", icon: BarChart3, path: "/analytics" },
+    {
+      id: "analytics",
+      name: "Analytics",
+      icon: BarChart3,
+      path: "/dashboardrouter/analytics",
+    },
     {
       id: "aiassistant",
       name: "AI Assistant",
       icon: Sparkles,
-      path: "/aiassistant",
+      path: "/dashboardrouter/aiassistant",
     },
   ];
 
@@ -106,6 +116,7 @@ function DashboardRouter() {
         <div className="p-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />
+
             <Route path="/contenteditor" element={<ContentEditor />} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/aiassistant" element={<AiAssistant />} />

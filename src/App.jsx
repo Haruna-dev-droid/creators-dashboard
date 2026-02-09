@@ -13,7 +13,9 @@ import Footer from "./components/Footer";
 import DashboardRouter from "./components/FullSetup/DashboardRouter";
 import SignUp from "./components/SignUp";
 import Analytics from "./components/pages/Analytics";
-import AIAssistant from "./components/pages/AIAssistant";
+import AIAssistant from "./components/pages/AiAssistant";
+import Dashboard from "./components/pages/Dashboard";
+import ContentEditor from "./components/pages/ContentEditor";
 import "/src/index.css";
 import "./App.css";
 
@@ -46,6 +48,24 @@ function App() {
             }
           />
           <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoutes>
+                <Dashboard />
+              </ProtectedRoutes>
+            }
+          />
+
+          <Route
+            path="/contenteditor"
+            element={
+              <ProtectedRoutes>
+                <ContentEditor />
+              </ProtectedRoutes>
+            }
+          />
+
+          <Route
             path="/analytics"
             element={
               <ProtectedRoutes>
@@ -62,6 +82,7 @@ function App() {
               </ProtectedRoutes>
             }
           />
+
           <Route path="/footer" element={<Footer />} />
 
           {/* Catch all - redirect to landing */}

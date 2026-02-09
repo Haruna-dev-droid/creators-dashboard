@@ -107,11 +107,11 @@ function SignUp() {
   };
 
   return (
-    <div className="bg-blue-50 md:p-20">
-      <div className="flex flex-col md:flex-row  gap-10 justify-evenly p-5  min-h-screen md:bg-white md:shadow-lg rounded-2xl md:max-w-230 max-w-120  mx-auto py-auto ">
+    <div className="bg-blue-50 md:p-20 min-h-screen">
+      <div className="flex flex-col md:flex-row  gap-10 justify-evenly p-5   md:bg-white md:shadow-lg rounded-2xl md:max-w-230 max-w-120  mx-auto py-auto md:h-140">
         <div className="bg-gradient-to-br from-[#0a1e4a] via-[#1e5fb8] to-[#6dd5ed] p-5 rounded-2xl md:px-5 px-5 md:mt-0 -mb-10 md:mb-0 mt-5 my-auto">
           {" "}
-          <h1 className="md:mt-110 md:text-3xl text-2xl text-white md:p-0 p-3 md:text-start text-center">
+          <h1 className="md:mt-90 md:text-3xl text-2xl text-white md:p-0 p-3 md:text-start text-center">
             {" "}
             {isLogin ? "Welcome back! Log in" : "Create your account"}
           </h1>
@@ -122,7 +122,7 @@ function SignUp() {
         <div className="flex items-center justify-center p-4">
           <div className="overflow-hidden max-w-md w-full">
             {/* Form */}
-            <div className="md:p-8">
+            <div className="md:p-8 text-[12px]">
               {/* Toggle between Sign Up and Login */}
               <div className="flex p-1 mb-6">
                 <button
@@ -136,7 +136,7 @@ function SignUp() {
                       confirmPassword: "",
                     });
                   }}
-                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-all ${
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-all text-sm ${
                     !isLogin
                       ? "bg-white text-blue-600 shadow-sm"
                       : "text-gray-600 hover:text-gray-800"
@@ -155,7 +155,7 @@ function SignUp() {
                       confirmPassword: "",
                     });
                   }}
-                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-all ${
+                  className={`flex-1 py-2 px-4 rounded-md font-medium transition-all text-sm ${
                     isLogin
                       ? "bg-white text-blue-600 shadow-sm"
                       : "text-gray-600 hover:text-gray-800"
@@ -173,12 +173,12 @@ function SignUp() {
               )}
               <form
                 onSubmit={isLogin ? handleLogin : handleSignUp}
-                className="space-y-4"
+                className="space-y-2"
               >
                 {/* Name field (only for sign up) */}
                 {!isLogin && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block font-medium text-gray-700 mb-1">
                       Full Name
                     </label>
                     <div className="relative">
@@ -197,7 +197,7 @@ function SignUp() {
 
                 {/* Email field */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block  font-medium text-gray-700 mb-1">
                     Email Address
                   </label>
                   <div className="relative">
@@ -215,7 +215,7 @@ function SignUp() {
 
                 {/* Password field */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block  font-medium text-gray-700 mb-1">
                     Password
                   </label>
                   <div className="relative">
@@ -225,7 +225,7 @@ function SignUp() {
                       name="password"
                       value={formData.password}
                       onChange={handleInputChange}
-                      className="w-full pl-10 pr-12 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+                      className="w-full  pl-10 md:pr-25 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                       placeholder={
                         isLogin
                           ? "Enter your password"
@@ -249,7 +249,7 @@ function SignUp() {
                 {/* Confirm Password field (only for sign up) */}
                 {!isLogin && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block  font-medium text-gray-700 mb-1">
                       Confirm Password
                     </label>
                     <div className="relative">
@@ -259,7 +259,7 @@ function SignUp() {
                         name="confirmPassword"
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
+                        className="w-full pl-10   py-2  border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all"
                         placeholder="Confirm your password"
                       />
                     </div>
@@ -282,7 +282,7 @@ function SignUp() {
                 </NavLink>
               </form>
               {/* Footer text */}
-              <p className="text-center text-sm text-gray-600 mt-6">
+              <p className="text-center  text-gray-600 mt-6">
                 {isLogin
                   ? "Don't have an account? "
                   : "Already have an account? "}
