@@ -39,10 +39,10 @@ export default function ResponsiveNavbar() {
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             <div className="hidden md:flex gap-4 items-center">
-              <button className="border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+              <button className="cursor-pointer border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
                 Sign in
               </button>
-              <button className="bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
+              <button className="cursor-pointer bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
                 Sign up
               </button>
             </div>
@@ -82,14 +82,19 @@ export default function ResponsiveNavbar() {
           ))}
 
           {/* Mobile Auth Buttons */}
-          <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
-            <button className="w-full border border-blue-400 px-4 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium">
-              Sign in
-            </button>
-            <button className="w-full bg-blue-700 px-4 py-3 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
-              Sign up
-            </button>
-          </div>
+          <NavLink
+            to="/signup"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
+              <button className=" w-full border border-blue-400 px-4 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium">
+                Sign in
+              </button>
+              <button className=" w-full bg-blue-700 px-4 py-3 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
+                Sign up
+              </button>
+            </div>
+          </NavLink>
         </div>
       </div>
     </nav>

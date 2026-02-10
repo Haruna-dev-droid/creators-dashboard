@@ -50,10 +50,10 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
     <aside
       className={`${
         isOpen ? "w-64" : "w-20"
-      } bg-slate-950 text-white transition-all duration-300 flex flex-col`}
+      } bg-blue-600/10 text-slate-950 transition-all duration-300 flex flex-col`}
     >
       {/* Sidebar Header */}
-      <div className="p-4 flex items-center justify-between border-b border-slate-800">
+      <div className="p-4 flex items-center justify-between ">
         {isOpen && <h1 className="text-xl font-bold">CreatorHub</h1>}
         <button
           onClick={() => setIsOpen(!isOpen)}
@@ -73,9 +73,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <Link
               key={item.id}
               to={item.path}
-              className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg transition-colors ${
+              className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg transition-colors text-slate-950 ${
                 isActive
-                  ? "bg-blue-600 text-white"
+                  ? "bg-blue-600 text-slate-950"
                   : "text-gray-300 hover:bg-slate-800 hover:text-white"
               }`}
             >
@@ -88,7 +88,7 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar Footer */}
       {isOpen && (
-        <div className="p-4 border-t border-slate-800">
+        <div className="p-4 ">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
               <span className="font-semibold">HS</span>

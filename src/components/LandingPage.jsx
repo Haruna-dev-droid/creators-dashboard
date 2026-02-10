@@ -1,5 +1,6 @@
 // LandingPage.jsx
 import React from "react";
+import { NavLink } from "react-router-dom";
 import Stats from "./Stats";
 import Cards from "./Cards";
 import DashboardPreview from "./DashboardPreview";
@@ -23,13 +24,17 @@ function LandingPage() {
               Designed to help creators focus on what matters most. Insights,
               stats, and tools at your fingertips.
             </p>
-
-            <div className="flex justify-center md:mx-0 mx-auto mt-8 items-center gap-4 w-44 p-3 bg-blue-600 shadow-lg rounded-full cursor-pointer hover:scale-105 transition-transform duration-300">
-              <button className="font-bold text-black">Get Started</button>
-              <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-lg">
-                &rarr;
-              </span>
-            </div>
+            <NavLink
+              to="/signup"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              <div className="flex justify-center md:mx-0 mx-auto mt-8 items-center gap-4 w-44 p-3 bg-blue-600 shadow-lg rounded-full cursor-pointer hover:scale-105 transition-transform duration-300">
+                <button className="font-bold text-black">Get Started</button>
+                <span className="w-8 h-8 bg-black rounded-full flex items-center justify-center text-white text-lg">
+                  &rarr;
+                </span>
+              </div>
+            </NavLink>
           </div>
 
           {/* Stats Card */}
@@ -85,14 +90,19 @@ function LandingPage() {
         <h1 className="md:text-6xl text-5xl text-purple-950/90 text-center font-bold ">
           Try CrtrsHub for free
         </h1>
-        <div className="flex gap-4 mt-5 items-center">
-          <button className="border border-purple-400 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors">
-            Sign in
-          </button>
-          <button className="bg-purple-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-purple-800 transition-colors">
-            Sign up
-          </button>
-        </div>
+        <NavLink
+          to="/signup"
+          className={({ isActive }) => (isActive ? "active" : "")}
+        >
+          <div className="flex gap-4 mt-5 items-center">
+            <button className=" cursor-pointer border border-purple-400 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors">
+              Sign in
+            </button>
+            <button className=" cursor-pointer bg-purple-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-purple-800 transition-colors">
+              Sign up
+            </button>
+          </div>
+        </NavLink>
       </div>
     </div>
   );
