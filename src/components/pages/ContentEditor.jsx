@@ -1,184 +1,18 @@
-// import React, { useEffect, useState } from "react";
-// import { Search, Plus, Trash2, Edit2, Save, X } from "lucide-react";
-
-// function ContentEditor() {
-//   const [notes, setNotes] = useState([]);
-//   const [editId, setEditId] = useState(null);
-//   const [newNote, setNewNote] = useState({ title: "", content: "" });
-
-//   // Mounts the saved notes from localStorage when the component renders
-//   useEffect(() => {
-//     const savedNotes = localStorage.getItem("notes");
-//     if (savedNotes) {
-//       setNotes(JSON.parse(savedNotes));
-//     }
-//   }, []);
-
-//   // Saves the notes to local storage when ever they change
-//   useEffect(() => {
-//     localStorage.setItem("notes", JSON.stringify(notes));
-//   }, [notes]);
-
-//   // handles the creation of new notes
-//   const handleNewNote = () => {
-//     if (newNote.title.trim() || newNote.content.trim()) {
-//       const note = {
-//         id: Date.now(),
-//         title: newNote.title,
-//         content: newNote.content,
-//         createdAt: new Date().toISOString,
-//         updatedAt: new Date().toISOString,
-//       };
-//       setNotes([note, ...notes]);
-//       setNewNote({ title: "", content: "" });
-//     }
-//   };
-
-//   // handles the deletion of notes
-//   const handleDeleteNote = (id) => {
-//     setNotes(notes.filter((note) => note.id !== id));
-//   };
-
-//   // handles the editing of notes
-//   const handleEditNote = (id, editedTitle, editedContent) => {
-//     setNotes(
-//       notes.map((note) =>
-//         note.id === id
-//           ? {
-//               ...notes,
-//               title: editedTitle,
-//               content: editedContent,
-//               updatedAt: new Date().toISOString(),
-//             }
-//           : note,
-//       ),
-//     );
-//     setEditId(null);
-//   };
-//   return (
-//     <div>
-//       <div className="mb-8">
-//         <h1 className="text-4xl font-bold text-gray-800 mb-2">My Ideas</h1>
-//         <p className="text-gray-600">{notes.length} ideas total</p>
-//       </div>
-
-//       <div>
-//         <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-//           <Plus size={20} />
-//           Create New Note
-//         </h2>
-//         <input
-//           type="text"
-//           placeholder="Note title..."
-//           value={newNote.title}
-//           onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-//           className="w-full mb-3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//         />
-//         <textarea
-//           placeholder="Note content..."
-//           value={newNote.content}
-//           onChange={(e) => setNewNote({ ...newNote, content: e.target.value })}
-//           className="w-full mb-3 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-//         />
-
-//         <button
-//           onClick={handleNewNote}
-//           className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-//         >
-//           Add Note
-//         </button>
-//       </div>
-
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-//         {notes.map((note) => (
-//           <NoteCard
-//             key={note.id}
-//             note={note}
-//             isEditing={editId === note.id}
-//             onEdit={() => setEditId(note.id)}
-//             onSave={(title, content) => handleEditNote(note.id, title, content)}
-//             onCancel={() => setEditId(null)}
-//             onDelete={() => handleDeleteNote(note.id)}
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
-// function NoteCard({ note, isEditing, onEdit, onSave, onCancel, onDelete }) {
-//   const [editTitle, setEditTitle] = useState(note.title);
-//   const [editContent, setEditContent] = useState(note.content);
-
-//   const handleSave = () => {
-//     onSave(editTitle, editContent);
-//   };
-
-//   if (isEditing) {
-//     return (
-//       <div className="bg-white rounded-lg shadow-md p-4 border-2 border-blue-500">
-//         <input
-//           type="text"
-//           value={editTitle}
-//           onChange={(e) => setEditTitle(e.target.value)}
-//           className="w-full mb-2 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-//         />
-//         <textarea
-//           value={editContent}
-//           onChange={(e) => setEditContent(e.target.value)}
-//           className="w-full mb-3 px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
-//         />
-//         <div className="flex gap-2">
-//           <button
-//             onClick={handleSave}
-//             className="flex-1 bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition-colors flex items-center justify-center gap-1"
-//           >
-//             <Save size={16} />
-//             Save
-//           </button>
-//           <button
-//             onClick={onCancel}
-//             className="flex-1 bg-gray-400 text-white px-3 py-1 rounded hover:bg-gray-500 transition-colors flex items-center justify-center gap-1"
-//           >
-//             <X size={16} />
-//             Cancel
-//           </button>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
-//       <h3 className="text-lg font-semibold mb-2 text-gray-800">
-//         {note.title || "Untitled"}
-//       </h3>
-//       <p className="text-gray-600 mb-3 line-clamp-3">{note.content}</p>
-//       <div className="text-xs text-gray-400 mb-3">
-//         {new Date(note.updatedAt).toLocaleDateString()}
-//       </div>
-//       <div className="flex gap-2">
-//         <button
-//           onClick={onEdit}
-//           className="flex-1 bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition-colors flex items-center justify-center gap-1"
-//         >
-//           <Edit2 size={14} />
-//           Edit
-//         </button>
-//         <button
-//           onClick={onDelete}
-//           className="flex-1 bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition-colors flex items-center justify-center gap-1"
-//         >
-//           <Trash2 size={14} />
-//           Delete
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default ContentEditor;
 import React, { useEffect, useState } from "react";
-import { Search, Plus, Trash2, Edit2, Save, X, FileText } from "lucide-react";
+import {
+  Search,
+  Plus,
+  Trash2,
+  Edit2,
+  Save,
+  X,
+  FileText,
+  LayoutGrid,
+  CheckSquare,
+  Lightbulb,
+  MessageSquare,
+  PlusCircle,
+} from "lucide-react";
 
 function ContentEditor() {
   const [notes, setNotes] = useState([]);
@@ -343,9 +177,11 @@ function ContentEditor() {
         {/* Header with Search */}
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-5xl font-bold text-gray-900 mb-2">My Ideas</h1>
+            <h1 className="text-5xl font-bold text-gray-900 mb-2">
+              My Projects
+            </h1>
             <p className="text-gray-700 text-xs">
-              {notes.length} ideas • {drafts.length} drafts
+              {notes.length} projects • {drafts.length} drafts
             </p>
           </div>
 
@@ -366,33 +202,45 @@ function ContentEditor() {
         <div className="mb-8 flex items-center gap-2 flex-wrap">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
               activeCategory === "all"
                 ? "bg-blue-500 text-white shadow-md"
                 : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
             }`}
           >
+            <LayoutGrid size={14} />
             All
           </button>
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium capitalize transition-all ${
-                activeCategory === cat
-                  ? "bg-blue-500 text-white shadow-md"
-                  : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
-              }`}
-            >
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            // Icon mapping for each category
+            const categoryIcons = {
+              todo: <CheckSquare size={14} className="text-red-600" />,
+              ideas: <Lightbulb size={14} className="text-yellow-600" />,
+              captions: <MessageSquare size={14} className="text-blue-600" />,
+            };
+
+            return (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`px-4 py-1.5 rounded-full text-xs font-medium capitalize transition-all flex items-center gap-1.5 ${
+                  activeCategory === cat
+                    ? "bg-blue-500 text-white shadow-md"
+                    : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
+                }`}
+              >
+                {categoryIcons[cat] || <FileText size={14} />}
+                {cat}
+              </button>
+            );
+          })}
           {!showAddCategory ? (
             <button
               onClick={() => setShowAddCategory(true)}
-              className="px-4 py-1.5 rounded-full text-xs font-medium bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 transition-all"
+              className="px-4 py-1.5 rounded-full text-xs font-medium bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 transition-all flex items-center gap-1.5"
             >
-              + Add Category
+              <PlusCircle size={14} className="text-green-600" />
+              Add Category
             </button>
           ) : (
             <div className="flex gap-2">
