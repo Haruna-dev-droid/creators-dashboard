@@ -18,6 +18,7 @@ function ContentEditor() {
   const [notes, setNotes] = useState([]);
   const [drafts, setDrafts] = useState([]);
   const [editId, setEditId] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [newNote, setNewNote] = useState({
     title: "",
     content: "",
@@ -48,22 +49,30 @@ function ContentEditor() {
     if (savedNotes) setNotes(JSON.parse(savedNotes));
     if (savedDrafts) setDrafts(JSON.parse(savedDrafts));
     if (savedCategories) setCategories(JSON.parse(savedCategories));
+
+    setIsLoaded(true);
   }, []);
 
   // Save notes to localStorage
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+    if (isLoaded) {
+      localStorage.setItem("notes", JSON.stringify(notes));
+    }
+  }, [notes, isLoaded]);
 
   // Save drafts to localStorage
   useEffect(() => {
-    localStorage.setItem("drafts", JSON.stringify(drafts));
-  }, [drafts]);
+    if (isLoaded) {
+      localStorage.setItem("drafts", JSON.stringify(drafts));
+    }
+  }, [drafts, isLoaded]);
 
   // Save categories to localStorage
   useEffect(() => {
-    localStorage.setItem("categories", JSON.stringify(categories));
-  }, [categories]);
+    if (isLoaded) {
+      localStorage.setItem("categories", JSON.stringify(categories));
+    }
+  }, [categories, isLoaded]);
 
   // Auto-save draft as user types
   useEffect(() => {
