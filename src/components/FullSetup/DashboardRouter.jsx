@@ -117,7 +117,7 @@ function DashboardRouter() {
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto bg-blue-50/70">
+      <main className="flex-1 overflow-y-auto bg-white">
         <div className="p-8">
           <Routes>
             <Route path="/" element={<Dashboard />} />

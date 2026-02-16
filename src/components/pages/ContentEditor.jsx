@@ -29,6 +29,7 @@ function ContentEditor() {
   const [newCategory, setNewCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddCategory, setShowAddCategory] = useState(false);
+  const [activities, setActivities] = useState([]);
 
   // Color palette for notes
   const noteColors = [
@@ -39,6 +40,12 @@ function ContentEditor() {
     "bg-pink-100 border-pink-200",
     "bg-indigo-100 border-indigo-200",
   ];
+
+  // Tracking Activities
+  useEffect(() => {
+    const savedActivities = localStorage.getItem("activities");
+    if (savedActivities) setActivities(JSON.parse(savedActivities));
+  }, []);
 
   // Load notes and drafts from localStorage
   useEffect(() => {
@@ -52,6 +59,27 @@ function ContentEditor() {
 
     setIsLoaded(true);
   }, []);
+
+  // Save activities when they change
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem("activities", JSON.stringify(activities));
+    }
+  }, [activities, isLoaded]);
+
+  // FUnction that logs activity
+
+  const logActivity = (type, noteTitle, category) => {
+    const activity = {
+      id: Date.now(),
+      type,
+      noteTitle,
+      category,
+      timestamp: new Date().toISOString(),
+    };
+    setActivities([activity, ...activities].slice(0, 50));
+  };
 
   // Save notes to localStorage
   useEffect(() => {
@@ -114,6 +142,7 @@ function ContentEditor() {
         updatedAt: new Date().toISOString(),
       };
       setNotes([note, ...notes]);
+      logActivity("created", note.title || "Untitled", note.category);
       setNewNote({ title: "", content: "", category: "ideas" });
       // Remove draft after publishing
       setDrafts(drafts.filter((d) => d.id !== "current-draft"));
@@ -122,11 +151,19 @@ function ContentEditor() {
 
   // Delete note
   const handleDeleteNote = (id) => {
+    const noteToDelete = notes.find((note) => note.id === id);
+    logActivity(
+      "deleted",
+      noteToDelete.title || "Untitled",
+      noteToDelete.category,
+    );
     setNotes(notes.filter((note) => note.id !== id));
   };
 
   // Update note
   const handleEditNote = (id, editedTitle, editedContent) => {
+    const noteToEdit = notes.find((note) => note.id === id);
+    logActivity("edited", editedTitle || "Untitled", noteToEdit.category);
     setNotes(
       notes.map((note) =>
         note.id === id

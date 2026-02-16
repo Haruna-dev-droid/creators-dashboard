@@ -1,52 +1,162 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import {
+  Plus,
+  Edit2,
+  Trash2,
+  FileText,
+  Calendar,
+  Activity,
+} from "lucide-react";
+import { useAuth } from "../contexts/ContextAuth";
 import { Eye, Users, Heart, DollarSign } from "lucide-react";
 
 function Dashboard() {
+  const [activities, setActivities] = useState([]);
+  const [notes, setNotes] = useState([]);
+  const { currentUser } = useAuth();
+  const user = currentUser;
+
+  useEffect(() => {
+    const savedActivities = localStorage.getItem("activities");
+    const savedNotes = localStorage.getItem("notes");
+
+    if (savedActivities) setActivities(JSON.parse(savedActivities));
+    if (savedNotes) setNotes(JSON.parse(savedNotes));
+  }, []);
+
+  // Activity type styling
+  const getActivityStyle = (type) => {
+    switch (type) {
+      case "created":
+        return "bg-green-100 text-green-800 border-green-300";
+      case "edited":
+        return "bg-blue-100 text-blue-800 border-blue-300";
+      case "deleted":
+        return "bg-red-100 text-red-800 border-red-300";
+      default:
+        return "bg-gray-100 text-gray-800 border-gray-300";
+    }
+  };
+
+  const getActivityIcon = (type) => {
+    switch (type) {
+      case "created":
+        return <Plus size={16} />;
+      case "edited":
+        return <Edit2 size={16} />;
+      case "deleted":
+        return <Trash2 size={16} />;
+      default:
+        return <FileText size={16} />;
+    }
+  };
+
   return (
-    <div className=" min-h-screen">
-      <div className="text-blue-950 ">
-        <h1 className="text-3xl font-bold  ">Dashboard</h1>
-        <p className="mb-6">Welcome Back! Here is your dashboard overview.</p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {/* Stats Cards */}
-          <div className=" p-6 rounded-lg shadow-sm border border-black/30">
-            <div className="flex justify-between mb-2">
-              <p className="text-sm text-gray-600 mb-1">Total Views</p>
-              <Eye className="w-5 h-5 text-blue-600" />
+    <div className="min-h-screen  p-6">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
+        <p className="text-gray-700 mb-6">
+          Welcome Back! {user?.name || "Guest"}
+        </p>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-20 gap-6 mb-8">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-gray-600 text-sm font-medium mb-2">
+                Total Notes
+              </h3>
+              <FileText size={24} className="text-blue-400 mb-4" />{" "}
             </div>
-            <p className="text-2xl font-bold ">1.2M</p>
-            <p className="text-sm text-green-600 mt-2">+12% from last month</p>
+            <p className="text-3xl font-bold text-gray-900">{notes.length}</p>
           </div>
-          <div className=" p-6 rounded-lg shadow-sm border border-black/30">
-            <div className="flex justify-between mb-2">
-              <p className="text-sm text-gray-600 mb-1">Subscribers</p>
-              <Users className="w-5 h-5 text-yellow-600" />
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-gray-600 text-sm font-medium mb-2">
+                This Week
+              </h3>
+              <Calendar size={24} className="text-blue-400 mb-4" />
             </div>
-            <p className="text-2xl font-bold ">45.2K</p>
-            <p className="text-sm text-green-600 mt-2">+8% from last month</p>
+            <p className="text-3xl font-bold text-gray-900">
+              {
+                activities.filter((a) => {
+                  const activityDate = new Date(a.timestamp);
+                  const weekAgo = new Date();
+                  weekAgo.setDate(weekAgo.getDate() - 7);
+                  return activityDate > weekAgo;
+                }).length
+              }
+            </p>
           </div>
-          <div className=" p-6 rounded-lg shadow-sm border border-black/30">
-            <div className="flex justify-between mb-2">
-              <p className="text-sm text-gray-600 mb-1">Engagement Rate</p>
-              <Heart className="w-5 h-5 text-purple-600" />
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-gray-600 text-sm font-medium mb-2">
+                Total Activities
+              </h3>
+              <Activity size={24} className="text-blue-400 mb-4" />
             </div>
-            <p className="text-2xl font-bold ">6.4%</p>
-            <p className="text-sm text-red-600 mt-2">-2% from last month</p>
-          </div>
-          <div className=" p-6 rounded-lg shadow-sm border border-black/30">
-            <div className="flex justify-between mb-2">
-              <p className="text-sm text-gray-600 mb-1">Total Revenue</p>
-              <DollarSign className="w-5 h-5 text-green-600" />
-            </div>
-            <p className="text-2xl font-bold ">$8,420</p>
-            <p className="text-sm text-green-600 mt-2">+15% from last month</p>
+            <p className="text-3xl font-bold text-gray-900">
+              {activities.length}
+            </p>
           </div>
         </div>
-        <div className=" p-6 rounded-lg shadow-sm border border-black/30">
-          <h2 className="text-xl font-semibold mb-4">Recent Activity</h2>
-          <p className="text-gray-600">
-            Your latest content performance and updates will appear here.
-          </p>
+
+        {/* Recent Activities */}
+        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+          <h2 className="text-[18px] font-bold text-gray-900 mb-6 flex items-center gap-2">
+            <FileText size={24} />
+            Recent Activities
+          </h2>
+
+          {activities.length > 0 ? (
+            <div className="space-y-3 text-sm">
+              {activities.slice(0, 10).map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-center justify-between p-4 rounded-lg border-l-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  style={{
+                    borderLeftColor:
+                      activity.type === "created"
+                        ? "#22c55e"
+                        : activity.type === "edited"
+                          ? "#3b82f6"
+                          : "#ef4444",
+                  }}
+                >
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`p-2 rounded-full ${getActivityStyle(activity.type)}`}
+                    >
+                      {getActivityIcon(activity.type)}
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-900 text-[14px]">
+                        <span className="capitalize">{activity.type}</span> "
+                        {activity.noteTitle}"
+                      </p>
+                      <p className=" text-gray-500 mt-1 text-[10px]">
+                        Category:{" "}
+                        <span className="font-medium capitalize">
+                          {activity.category}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <span className="text-xs text-gray-500">
+                    {new Date(activity.timestamp).toLocaleString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500 text-center py-8">No activities yet</p>
+          )}
         </div>
       </div>
     </div>
