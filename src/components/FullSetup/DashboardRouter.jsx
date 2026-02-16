@@ -12,6 +12,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { useAuth } from "../contexts/ContextAuth";
 import Dashboard from "../pages/Dashboard";
 import ContentEditor from "../pages/ContentEditor";
 import Analytics from "../pages/Analytics";
@@ -19,6 +20,8 @@ import AiAssistant from "../pages/AiAssistant";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
+  const { currentUser } = useAuth();
+  const user = currentUser;
   const navItems = [
     {
       id: "dashboard",
@@ -91,10 +94,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         <div className="p-4 ">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-              <span className="font-semibold">HS</span>
+              <span className="font-semibold">
+                {user?.name?.slice(0, 2).toUpperCase()}
+              </span>
             </div>
             <div>
-              <p className="font-semibold text-sm">Haruna Samaila</p>
+              <p className="font-semibold text-sm">{user?.name || "User"}</p>
               <p className="text-xs text-gray-400">Creator</p>
             </div>
           </div>

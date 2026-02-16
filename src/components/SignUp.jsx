@@ -70,7 +70,7 @@ function SignUp() {
 
     try {
       await signUp(formData.name, formData.email, formData.password);
-      navigate("/dashboard");
+      navigate("/dashboardrouter");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -98,7 +98,7 @@ function SignUp() {
 
     try {
       await login(formData.email, formData.password);
-      navigate("/dashboard");
+      navigate("/dashboardrouter");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -267,19 +267,17 @@ function SignUp() {
                 )}
 
                 {/* Submit button */}
-                <NavLink to="/dashboardrouter">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 rounded-lg font-semibold hover:from-800-700 hover:to-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
-                  >
-                    {loading
-                      ? "Please wait..."
-                      : isLogin
-                        ? "Log In"
-                        : "Create Account"}
-                  </button>
-                </NavLink>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-400 text-white py-2 rounded-lg font-semibold hover:from-800-700 hover:to-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                >
+                  {loading
+                    ? "Please wait..."
+                    : isLogin
+                      ? "Log In"
+                      : "Create Account"}
+                </button>
               </form>
               {/* Footer text */}
               <p className="text-center  text-gray-600 mt-6">
