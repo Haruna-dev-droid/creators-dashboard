@@ -29,7 +29,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { getActivity } from "./ActivityLogger";
 
 // ── Config: add new activities here anytime ───────────────────────────
 const ACTIVITIES = [
