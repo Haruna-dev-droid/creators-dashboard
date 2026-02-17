@@ -185,6 +185,7 @@ function ContentEditor() {
       setCategories([...categories, newCategory.toLowerCase()]);
       setNewCategory("");
       setShowAddCategory(false);
+      logActivity("category_added", newCategory);
     }
   };
 

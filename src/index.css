@@ -68,5 +68,5 @@ button:focus-visible {
 } */
 @import "tailwindcss";
 body {
-  font-family: "Bricolage Grotesque", serif;
+  font-family: "Manrope", sans-serif;
 }
