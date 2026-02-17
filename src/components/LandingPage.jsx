@@ -1,8 +1,8 @@
 // LandingPage.jsx
 import React from "react";
 import { NavLink } from "react-router-dom";
-import Stats from "./Stats";
-import Cards from "./Cards";
+import Stats from "./UI/Stats";
+import Cards from "./UI/Cards";
 import DashboardPreview from "./DashboardPreview";
 import { PenTool, BarChart3, Lightbulb, CalendarClock } from "lucide-react";
 

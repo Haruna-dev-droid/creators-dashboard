@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { PenTool, BarChart3, CalendarClock } from "lucide-react";
 
-import EditorMock from "./mockups/EditorMock";
-import AnalyticsMock from "./mockups/AnalyticsMock";
-import ScheduleMock from "./mockups/ScheduleMock";
+import EditorMock from "./UI/EditorMock";
+import AnalyticsMock from "./UI/AnalyticsMock";
+import ScheduleMock from "./UI/ScheduleMock";
 
 const tabs = [
   {
