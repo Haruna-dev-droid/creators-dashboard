@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { AuthProvider } from "./components/contexts/ContextAuth"; // ✅ Import AuthProvider
-// import { AppProvider } from "./components/contexts/AppContext"; // ✅ Import AppProvider
+import { AppProvider } from "./components/contexts/AppContext"; // ✅ Import AppProvider
 import ProtectedRoutes from "./components/ProtectedRoutes"; // ✅ Import ProtectedRoute
 import LandingPage from "./components/LandingPage";
 import NavBar from "./components/NavBar";
@@ -23,7 +23,6 @@ import "./App.css";
 function App() {
   return (
     <AuthProvider>
-      {/* <AppProvider> */}
       <Router>
         <Routes>
           <Route
@@ -44,9 +43,11 @@ function App() {
           <Route
             path="/dashboardrouter/*"
             element={
+              // <AppProvider>
               <ProtectedRoutes>
                 <DashboardRouter />
               </ProtectedRoutes>
+              // </AppProvider>
             }
           />
           <Route
@@ -91,7 +92,6 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Router>
-      {/* </AppProvider> */}
     </AuthProvider>
   );
 }

@@ -12,9 +12,9 @@ export function AppProvider({ children }) {
   });
 
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(note));
+    localStorage.setItem("notes", JSON.stringify(notes));
     localStorage.setItem("activities", JSON.stringify(activities));
-  }, [note, activities]);
+  }, [notes, activities]);
 
   const logActivity = (type, noteTitle, category) => {
     const entry = {
