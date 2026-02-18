@@ -9,7 +9,7 @@ export function AppProvider({ children }) {
   useEffect(() => {
     setNotes(JSON.parse(localStorage.getItem("notes") || "[]"));
     setActivities(JSON.parse(localStorage.getItem("activities") || "[]"));
-  });
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));

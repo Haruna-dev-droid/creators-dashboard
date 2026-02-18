@@ -23,75 +23,77 @@ import "./App.css";
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <NavBar />
-                <LandingPage />
-                <Footer />
-              </>
-            }
-          />
-          {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/signup" element={<SignUp />} />
+      <AppProvider>
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <NavBar />
+                  <LandingPage />
+                  <Footer />
+                </>
+              }
+            />
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/signup" element={<SignUp />} />
 
-          {/* Protected Routes */}
-          <Route
-            path="/dashboardrouter/*"
-            element={
-              // <AppProvider>
-              <ProtectedRoutes>
-                <DashboardRouter />
-              </ProtectedRoutes>
-              // </AppProvider>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoutes>
-                <Dashboard />
-              </ProtectedRoutes>
-            }
-          />
+            {/* Protected Routes */}
+            <Route
+              path="/dashboardrouter/*"
+              element={
+                // <AppProvider>
+                <ProtectedRoutes>
+                  <DashboardRouter />
+                </ProtectedRoutes>
+                // </AppProvider>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoutes>
+                  <Dashboard />
+                </ProtectedRoutes>
+              }
+            />
 
-          <Route
-            path="/contenteditor"
-            element={
-              <ProtectedRoutes>
-                <ContentEditor />
-              </ProtectedRoutes>
-            }
-          />
+            <Route
+              path="/contenteditor"
+              element={
+                <ProtectedRoutes>
+                  <ContentEditor />
+                </ProtectedRoutes>
+              }
+            />
 
-          <Route
-            path="/analytics"
-            element={
-              <ProtectedRoutes>
-                <Analytics />
-              </ProtectedRoutes>
-            }
-          />
+            <Route
+              path="/analytics"
+              element={
+                <ProtectedRoutes>
+                  <Analytics />
+                </ProtectedRoutes>
+              }
+            />
 
-          <Route
-            path="/aiassistant"
-            element={
-              <ProtectedRoutes>
-                <AIAssistant />
-              </ProtectedRoutes>
-            }
-          />
+            <Route
+              path="/aiassistant"
+              element={
+                <ProtectedRoutes>
+                  <AIAssistant />
+                </ProtectedRoutes>
+              }
+            />
 
-          <Route path="/footer" element={<Footer />} />
+            <Route path="/footer" element={<Footer />} />
 
-          {/* Catch all - redirect to landing */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Router>
+            {/* Catch all - redirect to landing */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Router>
+      </AppProvider>
     </AuthProvider>
   );
 }
