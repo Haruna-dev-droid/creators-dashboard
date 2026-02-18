@@ -9,21 +9,23 @@ import {
   Activity,
 } from "lucide-react";
 import { useAuth } from "../contexts/ContextAuth";
+import { useApp } from "../contexts/AppContext";
 import { Eye, Users, Heart, DollarSign } from "lucide-react";
 
 function Dashboard() {
-  const [activities, setActivities] = useState([]);
-  const [notes, setNotes] = useState([]);
+  const { notes, activities } = useApp();
+  // const [activities, setActivities] = useState([]);
+  // const [notes, setNotes] = useState([]);
   const { currentUser } = useAuth();
   const user = currentUser;
 
-  useEffect(() => {
-    const savedActivities = localStorage.getItem("activities");
-    const savedNotes = localStorage.getItem("notes");
+  // useEffect(() => {
+  //   const savedActivities = localStorage.getItem("activities");
+  //   const savedNotes = localStorage.getItem("notes");
 
-    if (savedActivities) setActivities(JSON.parse(savedActivities));
-    if (savedNotes) setNotes(JSON.parse(savedNotes));
-  }, []);
+  //   if (savedActivities) setActivities(JSON.parse(savedActivities));
+  //   if (savedNotes) setNotes(JSON.parse(savedNotes));
+  // }, []);
 
   // Activity type styling
   const getActivityStyle = (type) => {
@@ -132,8 +134,8 @@ function Dashboard() {
                     </div>
                     <div>
                       <p className="font-medium text-gray-900 text-[14px]">
-                        <span className="capitalize">{activity.type}</span> "
-                        {activity.noteTitle}"
+                        <span className="capitalize">{activity.type}</span>
+                        {activity.noteTitle ? `: ${activity.noteTitle}` : ""}
                       </p>
                       <p className=" text-gray-500 mt-1 text-[10px]">
                         Category:{" "}
