@@ -13,12 +13,14 @@ import {
   MessageSquare,
   PlusCircle,
 } from "lucide-react";
+import { useApp } from "../contexts/AppContext";
 
 function ContentEditor() {
-  const [notes, setNotes] = useState([]);
+  // const [notes, setNotes] = useState([]);
+  const { notes, setNotes, logActivity } = useApp();
   const [drafts, setDrafts] = useState([]);
   const [editId, setEditId] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // const [isLoaded, setIsLoaded] = useState(false);
   const [newNote, setNewNote] = useState({
     title: "",
     content: "",
@@ -29,7 +31,7 @@ function ContentEditor() {
   const [newCategory, setNewCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddCategory, setShowAddCategory] = useState(false);
-  const [activities, setActivities] = useState([]);
+  // const [activities, setActivities] = useState([]);
 
   // Color palette for notes
   const noteColors = [
@@ -42,65 +44,61 @@ function ContentEditor() {
   ];
 
   // Tracking Activities
-  useEffect(() => {
-    const savedActivities = localStorage.getItem("activities");
-    if (savedActivities) setActivities(JSON.parse(savedActivities));
-  }, []);
+  // useEffect(() => {
+  //   const savedActivities = localStorage.getItem("activities");
+  //   if (savedActivities) setActivities(JSON.parse(savedActivities));
+  // }, []);
 
   // Load notes and drafts from localStorage
   useEffect(() => {
-    const savedNotes = localStorage.getItem("notes");
+    // const savedNotes = localStorage.getItem("notes");
     const savedDrafts = localStorage.getItem("drafts");
     const savedCategories = localStorage.getItem("categories");
 
-    if (savedNotes) setNotes(JSON.parse(savedNotes));
+    // if (savedNotes) setNotes(JSON.parse(savedNotes));
     if (savedDrafts) setDrafts(JSON.parse(savedDrafts));
     if (savedCategories) setCategories(JSON.parse(savedCategories));
 
-    setIsLoaded(true);
+    // setIsLoaded(true);
   }, []);
 
   // Save activities when they change
 
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("activities", JSON.stringify(activities));
-    }
-  }, [activities, isLoaded]);
+  // useEffect(() => {
+  //   if (isLoaded) {
+  //     localStorage.setItem("activities", JSON.stringify(activities));
+  //   }
+  // }, [activities, isLoaded]);
 
   // FUnction that logs activity
 
-  const logActivity = (type, noteTitle, category) => {
-    const activity = {
-      id: Date.now(),
-      type,
-      noteTitle,
-      category,
-      timestamp: new Date().toISOString(),
-    };
-    setActivities([activity, ...activities].slice(0, 50));
-  };
+  // const logActivity = (type, noteTitle, category) => {
+  //   const activity = {
+  //     id: Date.now(),
+  //     type,
+  //     noteTitle,
+  //     category,
+  //     timestamp: new Date().toISOString(),
+  //   };
+  //   setActivities([activity, ...activities].slice(0, 50));
+  // };
 
   // Save notes to localStorage
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("notes", JSON.stringify(notes));
-    }
-  }, [notes, isLoaded]);
+  // useEffect(() => {
+  //   if (isLoaded) {
+  //     localStorage.setItem("notes", JSON.stringify(notes));
+  //   }
+  // }, [notes, isLoaded]);
 
   // Save drafts to localStorage
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("drafts", JSON.stringify(drafts));
-    }
-  }, [drafts, isLoaded]);
+    localStorage.setItem("drafts", JSON.stringify(drafts));
+  }, [drafts]);
 
   // Save categories to localStorage
   useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("categories", JSON.stringify(categories));
-    }
-  }, [categories, isLoaded]);
+    localStorage.setItem("categories", JSON.stringify(categories));
+  }, [categories]);
 
   // Auto-save draft as user types
   useEffect(() => {
