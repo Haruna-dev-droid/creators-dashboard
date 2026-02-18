@@ -51,7 +51,7 @@ function App() {
                 // </AppProvider>
               }
             />
-            <Route
+            {/* <Route
               path="/dashboard"
               element={
                 <ProtectedRoutes>
@@ -85,7 +85,7 @@ function App() {
                   <AIAssistant />
                 </ProtectedRoutes>
               }
-            />
+            /> */}
 
             <Route path="/footer" element={<Footer />} />
 
