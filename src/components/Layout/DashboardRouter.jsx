@@ -5,6 +5,7 @@ import {
   FileEdit,
   BarChart3,
   Sparkles,
+  ClipboardCheck,
   Settings,
   Users,
   FileText,
@@ -17,6 +18,7 @@ import Dashboard from "../pages/Dashboard";
 import ContentEditor from "../pages/ContentEditor";
 import Analytics from "../pages/Analytics";
 import AiAssistant from "../pages/AiAssistant";
+import Todo from "../pages/Todo";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
@@ -41,6 +43,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       icon: BarChart3,
       path: "/dashboardrouter/analytics",
     },
+
+    {
+      id: "todo",
+      name: "Todo",
+      icon: ClipboardCheck,
+      path: "/dashboardrouter/todo",
+    },
+
     {
       id: "aiassistant",
       name: "AI Assistant",
@@ -124,6 +134,7 @@ function DashboardRouter() {
 
             <Route path="/contenteditor" element={<ContentEditor />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/todo" element={<Todo />} />
             <Route path="/aiassistant" element={<AiAssistant />} />
           </Routes>
         </div>
