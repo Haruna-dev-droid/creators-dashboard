@@ -7,13 +7,15 @@ import {
   FileText,
   Calendar,
   Activity,
+  Check,
+  CheckCheckIcon,
 } from "lucide-react";
 import { useAuth } from "../contexts/ContextAuth";
 import { useApp } from "../contexts/AppContext";
 import { Eye, Users, Heart, DollarSign } from "lucide-react";
 
 function Dashboard() {
-  const { notes, activities } = useApp();
+  const { notes, activities, todo, logActivity } = useApp();
   // const [activities, setActivities] = useState([]);
   // const [notes, setNotes] = useState([]);
   const { currentUser } = useAuth();
@@ -73,6 +75,19 @@ function Dashboard() {
             </div>
             <p className="text-3xl font-bold text-gray-900">{notes.length}</p>
           </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-gray-600 text-sm font-medium mb-2">
+                Todos Completed
+              </h3>
+              <CheckCheckIcon size={24} className="text-blue-400 mb-4" />{" "}
+            </div>
+            <p className="text-3xl font-bold text-gray-900">
+              {todo.filter((t) => t.completed).length}
+            </p>
+          </div>
+
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-gray-600 text-sm font-medium mb-2">
