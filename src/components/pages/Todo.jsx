@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useApp } from "../contexts/AppContext";
-import { Trash2 } from "lucide-react";
+import { Trash2, X, Check } from "lucide-react";
 
 const filter = ["All", "Pending", "Completed"];
 
 function Todo() {
-  const { todo, setTodo, logActivity } = useApp();
+  const { todo, setTodo, logActivity, removeActivity } = useApp();
   // const [todo, setTodo] = useState([]);
   const [input, setInput] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
@@ -15,15 +15,25 @@ function Todo() {
     if (input.trim() === "") return;
     const newTodo = { id: Date.now(), text: input, completed: false };
     setTodo([...todo, newTodo]);
-    logActivity("add", null, null, newTodo.text);
+    // logActivity("added", null, null, newTodo.text);
     setInput("");
     inputRef.current.focus();
   };
 
   const removeTodo = (id) => {
     setTodo(todo.filter((item) => item.id !== id));
-    const removedItem = todo.find((item) => item.id === id);
-    if (removedItem) logActivity("remove", null, null, removedItem.text);
+    // const removedItem = todo.find((item) => item.id === id);
+    // if (removedItem) logActivity("deleted", null, null, removedItem.text);
+  };
+
+  const completeTodo = (id) => {
+    const itemCompleted = todo.find((item) => item.id === id);
+    if (!itemCompleted) return;
+    if (!itemCompleted.completed) {
+      logActivity("completed", null, null, itemCompleted.text);
+    } else {
+      removeActivity(itemCompleted.text);
+    }
   };
 
   const toggleTodo = (id) => {
@@ -78,19 +88,19 @@ function Todo() {
           visibleTodos.map((item, index) => (
             <div
               key={index}
-              className="p-2 bg-gray-100 rounded-lg flex items-center justify-between"
+              className={`p-2 ${item.completed ? "bg-blue-500/90  text-white" : "bg-blue-100/70"} rounded-full flex items-center justify-between`}
             >
               <div className="flex items-center">
                 <input
                   type="checkbox"
                   className="mr-2"
                   checked={item.completed}
-                  onChange={() => toggleTodo(item.id)}
+                  onChange={() => {
+                    toggleTodo(item.id);
+                    completeTodo(item.id);
+                  }}
                 />
-                <li
-                  key={index}
-                  className={`p-2 bg-gray-100 rounded-lg ${item.completed ? "line-through text-gray-500" : ""}`}
-                >
+                <li key={index} className={`p-2  rounded-lg `}>
                   {item.text}
                 </li>
               </div>
@@ -98,7 +108,11 @@ function Todo() {
                 onClick={() => removeTodo(item.id)}
                 className="ml-2 text-red-500 hover:text-red-700"
               >
-                <Trash2 size={16} />
+                {item.completed ? (
+                  <Check size={16} className="text-white" />
+                ) : (
+                  <X size={16} className="text-gray-500" />
+                )}
               </button>
             </div>
           ))

@@ -19,6 +19,12 @@ export function AppProvider({ children }) {
     localStorage.setItem("activities", JSON.stringify(activities));
   }, [notes, todo, activities]);
 
+  const removeActivity = (text) => {
+    setActivities((prev) =>
+      prev.filter((a) => a.todo !== text || a.type !== "completed"),
+    );
+  };
+
   const logActivity = (type, noteTitle, category, todo) => {
     const entry = {
       type,
@@ -32,7 +38,15 @@ export function AppProvider({ children }) {
 
   return (
     <AppContext.Provider
-      value={{ notes, todo, activities, setNotes, setTodo, logActivity }}
+      value={{
+        notes,
+        todo,
+        activities,
+        setNotes,
+        setTodo,
+        logActivity,
+        removeActivity,
+      }}
     >
       {children}
     </AppContext.Provider>

@@ -140,7 +140,11 @@ function Dashboard() {
                       <p className=" text-gray-500 mt-1 text-[10px]">
                         Category:{" "}
                         <span className="font-medium capitalize">
-                          {activity.category}
+                          {activity.category
+                            ? activity.category
+                            : activity.todo
+                              ? "Todo"
+                              : "General"}
                         </span>
                       </p>
                     </div>
