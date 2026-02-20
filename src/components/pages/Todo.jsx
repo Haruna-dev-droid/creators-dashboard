@@ -1,24 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import { useApp } from "../contexts/AppContext";
 import { Trash2 } from "lucide-react";
 
 const filter = ["All", "Pending", "Completed"];
 
 function Todo() {
-  const [todo, setTodo] = useState([]);
+  const { todo, setTodo, logActivity } = useApp();
+  // const [todo, setTodo] = useState([]);
   const [input, setInput] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const inputRef = useRef(null);
 
   const addTodo = () => {
     if (input.trim() === "") return;
-    setTodo([...todo, { id: Date.now(), text: input, completed: false }]);
+    const newTodo = { id: Date.now(), text: input, completed: false };
+    setTodo([...todo, newTodo]);
+    logActivity("add", null, null, newTodo.text);
     setInput("");
     inputRef.current.focus();
   };
 
   const removeTodo = (id) => {
     setTodo(todo.filter((item) => item.id !== id));
+    const removedItem = todo.find((item) => item.id === id);
+    if (removedItem) logActivity("remove", null, null, removedItem.text);
   };
 
   const toggleTodo = (id) => {

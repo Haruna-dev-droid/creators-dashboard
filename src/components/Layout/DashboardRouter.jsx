@@ -61,16 +61,27 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
   return (
     <aside
-      className={`${
-        isOpen ? "w-64" : "w-20"
-      } bg-blue-600/10 text-slate-950 transition-all duration-300 flex flex-col`}
+      className={`${isOpen ? "w-64" : "w-20"} bg-blue-600/90 backdrop-blur-xl
+  border-r border-white/10
+  shadow-2xl shadow-blue-900/30
+  rounded-br-4xl
+  text-white
+  transition-all duration-300
+  flex flex-col`}
     >
       {/* Sidebar Header */}
-      <div className="p-4 flex items-center justify-between ">
-        {isOpen && <h1 className="text-xl font-bold">CreatorHub</h1>}
+      <div className="p-4 flex items-center justify-between">
+        {isOpen && (
+          <h1 className="text-xl font-bold tracking-wide">CreatorHub</h1>
+        )}
+
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+          className="p-2 rounded-lg
+        bg-white/10 backdrop-blur-md
+        border border-white/10
+        hover:bg-white/20
+        transition-all text-white"
         >
           {isOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
@@ -86,11 +97,12 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
             <Link
               key={item.id}
               to={item.path}
-              className={`w-full flex items-center space-x-3 px-3 py-3 rounded-lg transition-colors text-slate-950 ${
-                isActive
-                  ? "bg-blue-600 text-slate-950"
-                  : "text-gray-300 hover:bg-slate-800 hover:text-white"
-              }`}
+              className={`w-full flex items-center space-x-3 px-3 py-3 rounded-xl
+            transition-all duration-300 ${
+              isActive
+                ? "bg-white/25 backdrop-blur-md border border-white/20 text-white font-semibold shadow-lg"
+                : "text-white/80 hover:bg-white/10 hover:text-white"
+            }`}
             >
               <Icon size={16} className="flex-shrink-0" />
               {isOpen && <span className="font-medium">{item.name}</span>}
@@ -101,16 +113,22 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 
       {/* Sidebar Footer */}
       {isOpen && (
-        <div className="p-4 ">
+        <div className="p-4 border-t border-white/10">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-              <span className="font-semibold">
+            <div
+              className="w-10 h-10
+          bg-white/15 backdrop-blur-md
+          border border-white/20
+          rounded-full flex items-center justify-center"
+            >
+              <span className="font-semibold text-white">
                 {user?.name?.slice(0, 2).toUpperCase()}
               </span>
             </div>
+
             <div>
               <p className="font-semibold text-sm">{user?.name || "User"}</p>
-              <p className="text-xs text-gray-400">Creator</p>
+              <p className="text-xs text-white/60">Creator</p>
             </div>
           </div>
         </div>
