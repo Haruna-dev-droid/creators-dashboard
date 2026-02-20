@@ -13,6 +13,7 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import DashboardRouter from "./components/Layout/DashboardRouter";
 import SignUp from "./components/SignUp";
+import ContentCalendar from "./components/pages/ContentCalendar";
 import Analytics from "./components/pages/Analytics";
 import AIAssistant from "./components/pages/AiAssistant";
 import Dashboard from "./components/pages/Dashboard";
@@ -26,6 +27,7 @@ function App() {
       <AppProvider>
         <Router>
           <Routes>
+            <Route path="/" element={<ContentCalendar />} />
             <Route
               path="/"
               element={
