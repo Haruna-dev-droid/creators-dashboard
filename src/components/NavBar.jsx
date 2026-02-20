@@ -15,7 +15,7 @@ export default function ResponsiveNavbar() {
   ];
 
   return (
-    <nav className="bg-white shadow-sm">
+    <nav className="bg-blue-500/90 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
@@ -26,7 +26,7 @@ export default function ResponsiveNavbar() {
             {navItems.map((item) => (
               <li
                 key={item.name}
-                className="font-medium text-black hover:text-blue-600 cursor-pointer transition-colors"
+                className="font-medium text-white text-sm hover:text-blue-900 cursor-pointer transition-colors"
               >
                 {item.name}
               </li>
@@ -38,11 +38,28 @@ export default function ResponsiveNavbar() {
             to="/signup"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
-            <div className="hidden md:flex gap-4 items-center">
-              <button className="cursor-pointer border border-blue-400 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors">
+            <div className="hidden md:flex gap-4 items-center text-sm">
+              <button
+                className="cursor-pointer px-5 py-2 rounded-xl 
+  bg-white/10 backdrop-blur-md 
+  border border-white/20 
+  text-white font-medium
+  shadow-lg shadow-blue-500/10
+  hover:bg-white/20 hover:shadow-blue-500/20
+  transition-all duration-300"
+              >
                 Sign in
               </button>
-              <button className="cursor-pointer bg-blue-700 px-4 py-2 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
+
+              <button
+                className="cursor-pointer px-5 py-2 rounded-xl 
+  bg-blue-500/70 backdrop-blur-md 
+  border border-blue-300/30 
+  text-white font-semibold
+  shadow-lg shadow-blue-500/20
+  hover:bg-blue-500/30 hover:shadow-blue-500/40
+  transition-all duration-300"
+              >
                 Sign up
               </button>
             </div>
@@ -87,10 +104,27 @@ export default function ResponsiveNavbar() {
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             <div className="flex flex-col gap-3 pt-4 border-t border-gray-100">
-              <button className=" w-full border border-blue-400 px-4 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium">
+              <button
+                className="cursor-pointer px-5 py-2 rounded-xl 
+  bg-blue-500/70 backdrop-blur-md 
+  border border-white/20 
+  text-white font-medium
+  shadow-lg shadow-blue-500/10
+  hover:bg-white/20 hover:shadow-blue-500/20
+  transition-all duration-300"
+              >
                 Sign in
               </button>
-              <button className=" w-full bg-blue-700 px-4 py-3 rounded-lg text-white font-semibold hover:bg-blue-800 transition-colors">
+
+              <button
+                className="cursor-pointer px-5 py-2 rounded-xl 
+  bg-blue-500 backdrop-blur-md 
+  border border-blue-300/30 
+  text-white font-semibold
+  shadow-lg shadow-blue-500/20
+  hover:bg-blue-500/30 hover:shadow-blue-500/40
+  transition-all duration-300"
+              >
                 Sign up
               </button>
             </div>

@@ -40,11 +40,11 @@ export default function DashboardPreview() {
   const ActiveComponent = activeTab.component;
 
   return (
-    <section className="py-24 bg-gradient-to-t from-blue-100 to-white">
+    <section className="py-24 ">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         {/* LEFT */}
         <div>
-          <h2 className="text-4xl font-bold mb-4 text-blue-950">
+          <h2 className="text-4xl font-bold mb-4 text-black/90">
             Everything creators need in one place
           </h2>
           <p className="text-gray-600 mb-8 max-w-md">
@@ -64,7 +64,7 @@ export default function DashboardPreview() {
                   className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition
                     ${
                       isActive
-                        ? "bg-blue-900 text-white"
+                        ? "bg-blue-500/90 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-blue-200"
                     }
                   `}
@@ -76,7 +76,7 @@ export default function DashboardPreview() {
             })}
           </div>
 
-          <h3 className="text-xl font-semibold mb-2">{activeTab.title}</h3>
+          <h3 className="text-xl font-semibold mb-2 ">{activeTab.title}</h3>
           <p className="text-gray-600 max-w-md">{activeTab.description}</p>
         </div>
 

@@ -67,7 +67,7 @@ export default function Stats() {
   const maxValue = Math.max(...platforms.map((p) => p.value));
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-lg  w-full flex justify-around items-end">
+    <div className="bg-white rounded-2xl p-3 sm:p-6 shadow-lg w-full flex justify-around items-end">
       {platforms.map((platform, index) => {
         const Icon = platform.icon;
         const barHeight = platform.value * 2;
@@ -75,46 +75,55 @@ export default function Stats() {
         return (
           <div
             key={platform.name}
-            className="flex flex-col items-center flex-1"
+            className="flex flex-col items-center flex-1 min-w-0"
           >
             {/* Growth indicator */}
             <div
-              className={`flex items-center gap-1 px-2 py-1 rounded-md mb-2 text-xs ${
+              className={`flex items-center gap-0.5 px-1.5 py-0.5 sm:px-2 sm:py-1 rounded-md mb-2 text-xs ${
                 platform.growth >= 0
                   ? "bg-black text-white"
                   : "bg-blue-900 text-white"
               }`}
             >
               {platform.growth >= 0 ? (
-                <TrendingUp className="w-3.5 h-3.5" />
+                <TrendingUp className="w-3 h-3" />
               ) : (
-                <TrendingDown className="w-3.5 h-3.5" />
+                <TrendingDown className="w-3 h-3" />
               )}
-              {platform.growth > 0 ? "+" : ""}
-              {platform.growth}%
+              <span className="text-[10px] sm:text-xs">
+                {platform.growth > 0 ? "+" : ""}
+                {platform.growth}%
+              </span>
             </div>
 
             {/* Bar */}
-            <div className="relative w-10" style={{ height: `${barHeight}px` }}>
+            <div
+              className="relative w-6 sm:w-10"
+              style={{ height: `${barHeight}px` }}
+            >
               <div
                 className={`absolute bottom-0 w-full bg-gradient-to-t ${platform.color} rounded-t-lg transition-all duration-700`}
                 style={{
                   height: animateIn ? `${barHeight}px` : "0px",
                   transitionDelay: `${index * 0.1}s`,
                 }}
-              ></div>
+              />
             </div>
 
             {/* Platform icon & info */}
             <div className="text-center mt-2">
               <div
-                className={`p-2 rounded-lg bg-gradient-to-br ${platform.color} shadow-md inline-flex  mb-1`}
+                className={`p-1.5 sm:p-2 rounded-lg bg-gradient-to-br ${platform.color} shadow-md inline-flex mb-1`}
               >
-                <Icon className="w-5 h-5 text-white" />
+                <Icon className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-white" />
               </div>
-              <h3 className="text-xs font-bold">{platform.name}</h3>
-              <p className="text-xs text-neutral-600">{platform.followers}</p>
-              <p className="text-xs text-neutral-500 mt-0.5">
+              <h3 className="text-[10px] sm:text-xs font-bold truncate w-full">
+                {platform.name}
+              </h3>
+              <p className="text-[10px] sm:text-xs text-neutral-600">
+                {platform.followers}
+              </p>
+              <p className="text-[10px] sm:text-xs text-neutral-500 mt-0.5 hidden sm:block">
                 {platform.engagement}
               </p>
             </div>
