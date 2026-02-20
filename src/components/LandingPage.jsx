@@ -63,46 +63,51 @@ function LandingPage() {
         </div>
       </div>
       {/* Cards Section */}
-      <div className="w-full max-w-7xl  grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20 px-8 mx-auto bg-blue-50/30 rounded-lg py-40">
-        <Cards
-          icon={PenTool}
-          title="Content Editor"
-          description="Create, edit, and polish your content in one distraction-free workspace."
-          color={{
-            bg: "bg-blue-100/90",
-            icon: "text-blue-600",
-          }}
-        />
+      <div className="bg-blue-50/30 pt-30">
+        <h1 className="text-center text-4xl font-bold text-blue-500/90 mb-5">
+          Creator Command Center
+        </h1>
+        <div className="w-full max-w-7xl  grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20 px-8 mx-auto  rounded-lg py-20">
+          <Cards
+            icon={PenTool}
+            title="Content Editor"
+            description="Create, edit, and polish your content in one distraction-free workspace."
+            color={{
+              bg: "bg-blue-100/90",
+              icon: "text-blue-600",
+            }}
+          />
 
-        <Cards
-          icon={BarChart3}
-          title="Analytics"
-          description="Track performance, engagement, and audience growth with clarity."
-          color={{
-            bg: "bg-gradient-to-r from-blue-500/90 to-green-200/90",
-            icon: "text-blue-600",
-          }}
-        />
+          <Cards
+            icon={BarChart3}
+            title="Analytics"
+            description="Track performance, engagement, and audience growth with clarity."
+            color={{
+              bg: "bg-gradient-to-r from-blue-500/90 to-green-200/90",
+              icon: "text-blue-600",
+            }}
+          />
 
-        <Cards
-          icon={Lightbulb}
-          title="Ideas Board"
-          description="Capture ideas and organize creative concepts effortlessly."
-          color={{
-            bg: "bg-blue-100/90",
-            icon: "text-blue-600",
-          }}
-        />
+          <Cards
+            icon={Lightbulb}
+            title="Ideas Board"
+            description="Capture ideas and organize creative concepts effortlessly."
+            color={{
+              bg: "bg-blue-100/90",
+              icon: "text-blue-600",
+            }}
+          />
 
-        <Cards
-          icon={CalendarClock}
-          title="Scheduling"
-          description="Plan and schedule content ahead of time without the stress."
-          color={{
-            bg: "bg-gradient-to-r from-blue-500/90 to-green-200/90",
-            icon: "text-blue-600",
-          }}
-        />
+          <Cards
+            icon={CalendarClock}
+            title="Scheduling"
+            description="Plan and schedule content ahead of time without the stress."
+            color={{
+              bg: "bg-gradient-to-r from-blue-500/90 to-green-200/90",
+              icon: "text-blue-600",
+            }}
+          />
+        </div>
       </div>
       <DashboardPreview />
       <div className="md:mt-20 mt-15 md:mx-10 mx-5 mb-30 px-5 md:px-10 py-30 flex flex-col justify-center items-center bg-gradient-to-t from-blue-500/90 via-blue-300 to-blue-500/90 rounded-lg">
