@@ -22,6 +22,14 @@ export function AppProvider({ children }) {
     }
   });
 
+  const [posts, setPosts] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem(`posts_${uid}`) || "[]");
+    } catch {
+      return [];
+    }
+  });
+
   const [activities, setActivities] = useState(() => {
     try {
       return JSON.parse(localStorage.getItem(`activities_${uid}`) || "[]");
@@ -36,12 +44,14 @@ export function AppProvider({ children }) {
     try {
       setNotes(JSON.parse(localStorage.getItem(`notes_${uid}`) || "[]"));
       setTodo(JSON.parse(localStorage.getItem(`todo_${uid}`) || "[]"));
+      setPosts(JSON.parse(localStorage.getItem(`posts_${uid}`) || "[]"));
       setActivities(
         JSON.parse(localStorage.getItem(`activities_${uid}`) || "[]"),
       );
     } catch {
       setNotes([]);
       setTodo([]);
+      setPosts([]);
       setActivities([]);
     }
   }, [currentUser]);
@@ -50,8 +60,9 @@ export function AppProvider({ children }) {
   useEffect(() => {
     localStorage.setItem(`notes_${uid}`, JSON.stringify(notes));
     localStorage.setItem(`todo_${uid}`, JSON.stringify(todo));
+    localStorage.setItem(`posts_${uid}`, JSON.stringify(posts));
     localStorage.setItem(`activities_${uid}`, JSON.stringify(activities));
-  }, [notes, todo, activities, uid]);
+  }, [notes, todo, posts, activities, uid]);
 
   const removeActivity = (text) => {
     setActivities((prev) =>
@@ -75,6 +86,8 @@ export function AppProvider({ children }) {
       value={{
         notes,
         todo,
+        posts,
+        setPosts,
         activities,
         setNotes,
         setTodo,
