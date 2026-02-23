@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useApp } from "../contexts/AppContext";
-import { Trash2, X, Check } from "lucide-react";
+import { Trash2, X, Check, Calendar } from "lucide-react";
 
 const filter = ["All", "Pending", "Completed"];
 
@@ -9,6 +9,7 @@ function Todo() {
   // const [todo, setTodo] = useState([]);
   const [input, setInput] = useState("");
   const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const inputRef = useRef(null);
 
@@ -18,12 +19,14 @@ function Todo() {
       id: Date.now(),
       text: input,
       description,
+      date,
       completed: false,
     };
     setTodo([...todo, newTodo]);
     // logActivity("added", null, null, newTodo.text);
     setInput("");
     setDescription("");
+    setDate("");
     inputRef.current.focus();
   };
 
@@ -96,6 +99,13 @@ function Todo() {
             placeholder="Add a note (optional)..."
           />
 
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full bg-gray-50 rounded-xl px-4 py-2.5 text-sm text-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-400 transition-all duration-200"
+          />
+
           <button
             onClick={addTodo}
             className="w-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white text-sm font-semibold py-2.5 rounded-xl transition-all duration-200 mt-1"
@@ -149,19 +159,30 @@ function Todo() {
                 </button>
 
                 {/* Text content */}
-                <div className="flex flex-col min-w-0">
-                  <li
-                    className={`list-none text-sm font-semibold truncate
+                <div className="flex justify-between items-start w-full">
+                  <div className="flex flex-col min-w-0">
+                    <li
+                      className={`list-none text-sm font-semibold truncate
               ${item.completed ? "line-through text-blue-100" : "text-gray-800"}`}
-                  >
-                    {item.text}
-                  </li>
-                  {item.description && (
-                    <p
-                      className={`text-xs mt-0.5 truncate
-                ${item.completed ? "text-blue-200" : "text-gray-400"}`}
                     >
-                      {item.description}
+                      {item.text}
+                    </li>
+                    {item.description && (
+                      <p
+                        className={`text-xs mt-0.5 truncate
+                ${item.completed ? "text-blue-200" : "text-gray-400"}`}
+                      >
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+                  {item.date && (
+                    <p
+                      className={`text-xs mt-1 truncate bg-gray-100 px-2 py-0.5 rounded-full flex items-center gap-1
+                ${item.completed ? "text-blue-500/90" : "text-gray-500"}`}
+                    >
+                      <Calendar size={12} className="inline mr-1" />{" "}
+                      {new Date(item.date).toLocaleDateString()}
                     </p>
                   )}
                 </div>
