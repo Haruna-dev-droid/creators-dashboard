@@ -1,23 +1,57 @@
 import { createContext, useContext, useState, useEffect } from "react";
-
+import { useAuth } from "./ContextAuth";
 const AppContext = createContext(null);
 
 export function AppProvider({ children }) {
-  const [notes, setNotes] = useState([]);
-  const [todo, setTodo] = useState([]);
-  const [activities, setActivities] = useState([]);
+  const { currentUser } = useAuth();
+  const uid = currentUser?.id || "guest";
 
-  useEffect(() => {
-    setNotes(JSON.parse(localStorage.getItem("notes") || "[]"));
-    setTodo(JSON.parse(localStorage.getItem("todo") || "[]"));
-    setActivities(JSON.parse(localStorage.getItem("activities") || "[]"));
-  }, []);
+  const [notes, setNotes] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem(`notes_${uid}`) || "[]");
+    } catch {
+      return [];
+    }
+  });
 
+  const [todo, setTodo] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem(`todo_${uid}`) || "[]");
+    } catch {
+      return [];
+    }
+  });
+
+  const [activities, setActivities] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem(`activities_${uid}`) || "[]");
+    } catch {
+      return [];
+    }
+  });
+
+  // Re-load when user changes (login/logout)
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-    localStorage.setItem("todo", JSON.stringify(todo));
-    localStorage.setItem("activities", JSON.stringify(activities));
-  }, [notes, todo, activities]);
+    const uid = currentUser?.id || "guest";
+    try {
+      setNotes(JSON.parse(localStorage.getItem(`notes_${uid}`) || "[]"));
+      setTodo(JSON.parse(localStorage.getItem(`todo_${uid}`) || "[]"));
+      setActivities(
+        JSON.parse(localStorage.getItem(`activities_${uid}`) || "[]"),
+      );
+    } catch {
+      setNotes([]);
+      setTodo([]);
+      setActivities([]);
+    }
+  }, [currentUser]);
+
+  // Save effect — now keyed per user
+  useEffect(() => {
+    localStorage.setItem(`notes_${uid}`, JSON.stringify(notes));
+    localStorage.setItem(`todo_${uid}`, JSON.stringify(todo));
+    localStorage.setItem(`activities_${uid}`, JSON.stringify(activities));
+  }, [notes, todo, activities, uid]);
 
   const removeActivity = (text) => {
     setActivities((prev) =>
