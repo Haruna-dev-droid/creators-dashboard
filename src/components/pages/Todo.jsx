@@ -8,15 +8,22 @@ function Todo() {
   const { todo, setTodo, logActivity, removeActivity } = useApp();
   // const [todo, setTodo] = useState([]);
   const [input, setInput] = useState("");
+  const [description, setDescription] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
   const inputRef = useRef(null);
 
   const addTodo = () => {
     if (input.trim() === "") return;
-    const newTodo = { id: Date.now(), text: input, completed: false };
+    const newTodo = {
+      id: Date.now(),
+      text: input,
+      description,
+      completed: false,
+    };
     setTodo([...todo, newTodo]);
     // logActivity("added", null, null, newTodo.text);
     setInput("");
+    setDescription("");
     inputRef.current.focus();
   };
 
@@ -58,61 +65,119 @@ function Todo() {
           <button
             key={status}
             onClick={() => setFilterStatus(status)}
-            className={`mr-2 px-4 py-2 rounded ${filterStatus === status ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700"} hover:bg-gray-300 transition-colors`}
+            className={`mr-2 px-4 py-2 rounded-xl ${filterStatus === status ? " text-blue-500/90" : " text-gray-700"} hover:text-gray-300 transition-colors text-sm`}
           >
             {status}
           </button>
         ))}
       </div>
-      <div className="flex mb-4">
-        <input
-          ref={inputRef}
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && addTodo()}
-          className="border border-gray-300 rounded-l-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Add a new todo..."
-        />
-        <button
-          onClick={addTodo}
-          className="bg-blue-600 text-white px-4 py-2 rounded-r-lg hover:bg-blue-700 transition-colors"
-        >
-          Add
-        </button>
+      <div className="bg-white border border-gray-100 rounded-2xl shadow-sm p-4 mb-5">
+        <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-3">
+          New Task
+        </p>
+
+        <div className="flex flex-col gap-2">
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addTodo()}
+            className="w-full bg-gray-50 rounded-xl px-4 py-2.5 text-sm font-medium text-gray-800 placeholder-gray-300 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-400 transition-all duration-200"
+            placeholder="What needs to be done?"
+          />
+
+          <input
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && addTodo()}
+            className="w-full bg-gray-50 rounded-xl px-4 py-2.5 text-sm text-gray-500 placeholder-gray-300 focus:outline-none focus:bg-white focus:ring-2 focus:ring-blue-400 transition-all duration-200"
+            placeholder="Add a note (optional)..."
+          />
+
+          <button
+            onClick={addTodo}
+            className="w-full bg-blue-500 hover:bg-blue-600 active:scale-95 text-white text-sm font-semibold py-2.5 rounded-xl transition-all duration-200 mt-1"
+          >
+            + Add Task
+          </button>
+        </div>
       </div>
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {visibleTodos.length === 0 ? (
-          <p className="text-gray-500">No todos to display</p>
+          <p className="text-gray-400 text-sm text-center py-8">
+            No todos to display
+          </p>
         ) : (
           visibleTodos.map((item, index) => (
             <div
               key={index}
-              className={`p-2 ${item.completed ? "bg-blue-500/90  text-white" : "bg-blue-100/70"} rounded-full flex items-center justify-between`}
+              className={`group relative flex items-center justify-between px-5 py-4 rounded-2xl border transition-all duration-200
+          ${
+            item.completed
+              ? "bg-blue-500 border-blue-500 shadow-md shadow-blue-200 text-white"
+              : "bg-white border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-blue-100"
+          }`}
             >
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2"
-                  checked={item.completed}
-                  onChange={() => {
+              {/* Left accent bar on hover (incomplete only) */}
+              {!item.completed && (
+                <span className="absolute left-0 top-3 bottom-3 w-0.5 rounded-full bg-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+              )}
+
+              <div className="flex items-center gap-4 flex-1 min-w-0">
+                {/* Custom circular checkbox */}
+                <button
+                  onClick={() => {
                     toggleTodo(item.id);
                     completeTodo(item.id);
                   }}
-                />
-                <li key={index} className={`p-2  rounded-lg `}>
-                  {item.text}
-                </li>
+                  className={`flex-shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all duration-200
+              ${
+                item.completed
+                  ? "bg-white border-white"
+                  : "border-gray-300 hover:border-blue-400 bg-white"
+              }`}
+                >
+                  {item.completed && (
+                    <Check
+                      size={11}
+                      className="text-blue-500"
+                      strokeWidth={3}
+                    />
+                  )}
+                </button>
+
+                {/* Text content */}
+                <div className="flex flex-col min-w-0">
+                  <li
+                    className={`list-none text-sm font-semibold truncate
+              ${item.completed ? "line-through text-blue-100" : "text-gray-800"}`}
+                  >
+                    {item.text}
+                  </li>
+                  {item.description && (
+                    <p
+                      className={`text-xs mt-0.5 truncate
+                ${item.completed ? "text-blue-200" : "text-gray-400"}`}
+                    >
+                      {item.description}
+                    </p>
+                  )}
+                </div>
               </div>
+
+              {/* Remove button */}
               <button
                 onClick={() => removeTodo(item.id)}
-                className="ml-2 text-red-500 hover:text-red-700"
+                className={`flex-shrink-0 ml-3 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-150
+            ${
+              item.completed
+                ? "hover:bg-blue-400 text-blue-100 hover:text-white"
+                : "text-gray-300 hover:bg-red-50 hover:text-red-400 opacity-0 group-hover:opacity-100"
+            }`}
               >
-                {item.completed ? (
-                  <Check size={16} className="text-white" />
-                ) : (
-                  <X size={16} className="text-gray-500" />
-                )}
+                <X size={14} strokeWidth={2.5} />
               </button>
             </div>
           ))

@@ -1,6 +1,7 @@
 import React from "react";
 
 function ContentCalendar() {
+  const today = Date.now();
   return (
     <div>
       ContentCalendar

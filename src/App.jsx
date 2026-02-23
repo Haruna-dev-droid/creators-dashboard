@@ -27,7 +27,7 @@ function App() {
       <AppProvider>
         <Router>
           <Routes>
-            <Route path="/" element={<ContentCalendar />} />
+            {/* <Route path="/" element={<ContentCalendar />} /> */}
             <Route
               path="/"
               element={

@@ -83,7 +83,7 @@ function LandingPage() {
             title="Analytics"
             description="Track performance, engagement, and audience growth with clarity."
             color={{
-              bg: "bg-gradient-to-r from-blue-500/90 to-green-200/90",
+              bg: "bg-gradient-to-r from-blue-500/90 to-blue-200/90",
               icon: "text-blue-600",
             }}
           />
@@ -103,7 +103,7 @@ function LandingPage() {
             title="Scheduling"
             description="Plan and schedule content ahead of time without the stress."
             color={{
-              bg: "bg-gradient-to-r from-blue-500/90 to-green-200/90",
+              bg: "bg-gradient-to-r from-blue-500/90 to-blue-200/90",
               icon: "text-blue-600",
             }}
           />
