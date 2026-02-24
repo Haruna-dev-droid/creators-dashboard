@@ -68,5 +68,6 @@ button:focus-visible {
 } */
 @import "tailwindcss";
 body {
-  font-family: "Manrope", sans-serif;
+  /* font-family: "Manrope", sans-serif; */
+  font-family: "Plus Jakarta Sans", sans-serif;
 }

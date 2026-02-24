@@ -140,7 +140,7 @@ function ContentEditor() {
         updatedAt: new Date().toISOString(),
       };
       setNotes([note, ...notes]);
-      logActivity("created", note.title || "Untitled", note.category);
+      logActivity("note_created", note.title || "Untitled", note.category);
       setNewNote({ title: "", content: "", category: "ideas" });
       // Remove draft after publishing
       setDrafts(drafts.filter((d) => d.id !== "current-draft"));
@@ -151,17 +151,18 @@ function ContentEditor() {
   const handleDeleteNote = (id) => {
     const noteToDelete = notes.find((note) => note.id === id);
     logActivity(
-      "deleted",
+      "note_deleted",
       noteToDelete.title || "Untitled",
       noteToDelete.category,
     );
+
     setNotes(notes.filter((note) => note.id !== id));
   };
 
   // Update note
   const handleEditNote = (id, editedTitle, editedContent) => {
     const noteToEdit = notes.find((note) => note.id === id);
-    logActivity("edited", editedTitle || "Untitled", noteToEdit.category);
+    logActivity("note_edited", editedTitle || "Untitled", noteToEdit.category);
     setNotes(
       notes.map((note) =>
         note.id === id
@@ -222,7 +223,7 @@ function ContentEditor() {
         {/* Header with Search */}
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-5xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
               My Projects
             </h1>
             <p className="text-gray-700 text-xs">
@@ -544,18 +545,16 @@ function NoteCard({
         <button
           onClick={onEdit}
           className="flex-1 
-      bg-white/10 
-      backdrop-blur-md 
-      border border-white/20 
-      text-blue-500/90 
-      px-4 py-2 
-      rounded-xl 
-      shadow-lg 
-      hover:bg-blue-500/20 
-      hover:border-blue-400/40
-      transition-all duration-300 
-      flex items-center justify-center gap-2 
-      text-[11px] font-medium"
+    bg-blue-500 
+    text-white 
+    px-4 py-2 
+    rounded-xl 
+    shadow-md
+    hover:bg-blue-600
+    active:scale-95
+    transition-all duration-200 
+    flex items-center justify-center gap-2 
+    text-[11px] font-semibold tracking-wide"
         >
           <Edit2 size={14} />
           Edit
@@ -564,18 +563,16 @@ function NoteCard({
         <button
           onClick={onDelete}
           className="flex-1 
-      bg-white/10 
-      backdrop-blur-md 
-      border border-white/20 
-      text-red-500/90 
-      px-4 py-2 
-      rounded-xl 
-      shadow-lg 
-      hover:bg-red-500/20 
-      hover:border-red-400/40
-      transition-all duration-300 
-      flex items-center justify-center gap-2 
-      text-[11px] font-medium"
+    bg-red-500 
+    text-white 
+    px-4 py-2 
+    rounded-xl 
+    shadow-md
+    hover:bg-red-600
+    active:scale-95
+    transition-all duration-200 
+    flex items-center justify-center gap-2 
+    text-[11px] font-semibold tracking-wide"
         >
           <Trash2 size={14} />
           Delete

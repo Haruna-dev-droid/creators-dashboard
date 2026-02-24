@@ -37,7 +37,7 @@ function Todo() {
     const itemCompleted = todo.find((item) => item.id === id);
     if (!itemCompleted) return;
     if (!itemCompleted.completed) {
-      logActivity("completed", null, null, itemCompleted.text);
+      logActivity("todo_completed", null, null, itemCompleted.text);
     } else {
       removeActivity(itemCompleted.text);
     }
