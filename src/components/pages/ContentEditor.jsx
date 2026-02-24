@@ -448,33 +448,70 @@ function NoteCard({
 
   if (isEditing) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-5 border-2 border-blue-500">
-        <input
-          type="text"
-          value={editTitle}
-          onChange={(e) => setEditTitle(e.target.value)}
-          className="w-full mb-3 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <textarea
-          value={editContent}
-          onChange={(e) => setEditContent(e.target.value)}
-          className="w-full mb-4 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[120px] resize-none text-xs"
-        />
-        <div className="flex gap-2">
-          <button
-            onClick={handleSave}
-            className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2 font-medium text-xs"
-          >
-            <Save size={16} />
-            Save
-          </button>
-          <button
-            onClick={onCancel}
-            className="flex-1 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors flex items-center justify-center gap-2 font-medium text-xs"
-          >
-            <X size={16} />
-            Cancel
-          </button>
+      <div className="fixed inset-0 bg-gray-900/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-2xl shadow-2xl shadow-blue-100/60 border border-blue-100 w-full max-w-2xl p-10">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h2 className="text-xl font-bold text-gray-800 tracking-tight">
+                Edit Note
+              </h2>
+              <p className="text-xs text-gray-400 mt-1">
+                Make your changes below
+              </p>
+            </div>
+            <button
+              onClick={onCancel}
+              className="w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all"
+            >
+              <X size={17} strokeWidth={2.5} />
+            </button>
+          </div>
+
+          {/* Title input */}
+          <div className="mb-5">
+            <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+              Title
+            </label>
+            <input
+              type="text"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              className="w-full bg-gray-50 border border-blue-100 rounded-xl px-4 py-3 text-sm font-medium text-gray-800 placeholder-gray-300 focus:outline-none focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all"
+              placeholder="Note title..."
+            />
+          </div>
+
+          {/* Content textarea */}
+          <div className="mb-8">
+            <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
+              Content
+            </label>
+            <textarea
+              value={editContent}
+              onChange={(e) => setEditContent(e.target.value)}
+              className="w-full bg-gray-50 border border-blue-100 rounded-xl px-4 py-3 text-sm text-gray-600 placeholder-gray-300 focus:outline-none focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all min-h-[200px] resize-none leading-relaxed"
+              placeholder="Write your note here..."
+            />
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-3">
+            <button
+              onClick={onCancel}
+              className="flex-1 py-3 rounded-xl bg-gray-100 text-gray-500 text-sm font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
+            >
+              <X size={15} strokeWidth={2.5} />
+              Cancel
+            </button>
+            <button
+              onClick={handleSave}
+              className="flex-1 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 active:scale-[0.98] text-white text-sm font-semibold shadow-sm shadow-blue-200 transition-all flex items-center justify-center gap-2"
+            >
+              <Save size={15} />
+              Save Changes
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -506,14 +543,39 @@ function NoteCard({
       <div className="flex gap-2 mt-4">
         <button
           onClick={onEdit}
-          className="flex-1 bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors flex items-center justify-center gap-2 text-[11px] font-medium"
+          className="flex-1 
+      bg-white/10 
+      backdrop-blur-md 
+      border border-white/20 
+      text-blue-500/90 
+      px-4 py-2 
+      rounded-xl 
+      shadow-lg 
+      hover:bg-blue-500/20 
+      hover:border-blue-400/40
+      transition-all duration-300 
+      flex items-center justify-center gap-2 
+      text-[11px] font-medium"
         >
           <Edit2 size={14} />
           Edit
         </button>
+
         <button
           onClick={onDelete}
-          className="flex-1 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-2 text-[11px] font-medium"
+          className="flex-1 
+      bg-white/10 
+      backdrop-blur-md 
+      border border-white/20 
+      text-red-500/90 
+      px-4 py-2 
+      rounded-xl 
+      shadow-lg 
+      hover:bg-red-500/20 
+      hover:border-red-400/40
+      transition-all duration-300 
+      flex items-center justify-center gap-2 
+      text-[11px] font-medium"
         >
           <Trash2 size={14} />
           Delete

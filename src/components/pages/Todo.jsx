@@ -63,8 +63,7 @@ function Todo() {
       className="min-h-screen text-gray-800"
       style={{
         fontFamily: "'DM Sans', system-ui, sans-serif",
-        background:
-          "linear-gradient(135deg, #eff6ff 0%, #f8faff 50%, #f0f4ff 100%)",
+        background: "",
       }}
     >
       {/* Background glows */}

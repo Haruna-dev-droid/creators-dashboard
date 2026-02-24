@@ -37,18 +37,19 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       icon: FileEdit,
       path: "/dashboardrouter/contenteditor",
     },
+
+    {
+      id: "todo",
+      name: "Workflow",
+      icon: ClipboardCheck,
+      path: "/dashboardrouter/todo",
+    },
+
     {
       id: "analytics",
       name: "Analytics",
       icon: BarChart3,
       path: "/dashboardrouter/analytics",
-    },
-
-    {
-      id: "todo",
-      name: "Todo",
-      icon: ClipboardCheck,
-      path: "/dashboardrouter/todo",
     },
 
     {
