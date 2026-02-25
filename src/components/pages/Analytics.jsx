@@ -168,7 +168,7 @@ export default function Analytics() {
               onClick={() => setActiveFilter("all")}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                 activeFilter === "all"
-                  ? "bg-blue-500 text-white border-blue-500 shadow-sm"
+                  ? "bg-blue-500/90 text-white border-blue-500 shadow-sm"
                   : "bg-white text-gray-500 border-gray-200 hover:border-blue-300 hover:text-blue-500"
               }`}
             >
