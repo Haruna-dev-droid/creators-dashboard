@@ -15,7 +15,7 @@ import { useApp } from "../contexts/AppContext";
 import { Eye, Users, Heart, DollarSign } from "lucide-react";
 
 function Dashboard() {
-  const { notes, activities, todo, logActivity } = useApp();
+  const { notes, activities, todo } = useApp();
   // const [activities, setActivities] = useState([]);
   // const [notes, setNotes] = useState([]);
   const { currentUser } = useAuth();

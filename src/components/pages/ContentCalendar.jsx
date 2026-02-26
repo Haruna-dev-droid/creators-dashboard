@@ -229,7 +229,7 @@ function ContentCalendar() {
         </div>
 
         {/* Cells */}
-        <div className="grid grid-cols-7 flex-1 border border-gray-100 rounded-xl overflow-hidden bg-white shadow-sm">
+        <div className="grid grid-cols-7 grid-rows-6  flex-1 border border-gray-100 rounded-xl overflow-hidden bg-white shadow-sm">
           {Array.from({ length: totalCells }).map((_, i) => {
             const day = i - firstDay + 1;
             const isValid = day >= 1 && day <= daysInMonth;

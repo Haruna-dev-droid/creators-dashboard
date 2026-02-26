@@ -1,24 +1,3 @@
-// import React from "react";
-
-// function Analytics() {
-//   return (
-//     <div>
-//       <h1 className="text-3xl font-bold text-gray-900 mb-6">Analytics</h1>
-//       <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-//         <h2 className="text-xl font-semibold mb-4">Performance Metrics</h2>
-//         <p className="text-gray-600">
-//           Detailed analytics and insights about your content performance.
-//         </p>
-//         <div className="mt-6 h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-//           <p className="text-gray-500">Chart visualization would go here</p>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default Analytics;
-
 import React, { useState, useMemo } from "react";
 import { useApp } from "../contexts/AppContext";
 import {
@@ -52,7 +31,7 @@ function buildChartData(activities) {
   activities.forEach(({ type, timestamp }) => {
     if (!timestamp) return;
     const date = timestamp.split("T")[0];
-    if (date !== todayKey) return; // today only
+    if (date !== todayKey) return;
 
     const hour = new Date(timestamp).getHours();
     if (!hourMap[hour]) hourMap[hour] = {};
@@ -100,10 +79,10 @@ function CustomTooltip({ active, payload, label }) {
 
 export default function Analytics() {
   const [activeFilter, setActiveFilter] = useState("all");
-  const { activities } = useApp(); // ✅ read the array directly
+  const { activities } = useApp();
 
   const { chartData, totals } = useMemo(() => {
-    const data = buildChartData(activities); // ✅ pass the array
+    const data = buildChartData(activities);
 
     const totals = {};
     ACTIVITIES.forEach(({ key }) => {
@@ -114,7 +93,7 @@ export default function Analytics() {
   }, [activities]); // ✅ re-runs when activities changes
 
   const totalActions = Object.values(totals).reduce((a, b) => a + b, 0);
-  const displayData = chartData.filter((_, i) => i >= 6); // 6am onward
+  const displayData = chartData.filter((_, i) => i >= 0);
 
   const visibleActivities =
     activeFilter === "all"
@@ -134,7 +113,7 @@ export default function Analytics() {
       </p>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-8">
         <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
           <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide mb-1">
             Total
