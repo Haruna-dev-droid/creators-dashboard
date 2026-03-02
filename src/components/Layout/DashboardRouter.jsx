@@ -68,7 +68,9 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   rounded-br-4xl
   text-white
   transition-all duration-300
-  flex flex-col`}
+  flex flex-col
+  fixed lg:relative left-0 top-0 h-screen z-40
+  ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
     >
       {/* Sidebar Header */}
       <div className="p-4 flex items-center justify-between">
@@ -139,15 +141,31 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
 };
 
 function DashboardRouter() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex min-h-screen bg-gray-50 lg:h-screen">
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
+      {/* Overlay for mobile */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/30 lg:hidden z-30"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto bg-white">
-        <div className="p-8">
+      <main className="w-full flex-1 overflow-y-auto bg-white">
+        <div className="p-4 sm:p-6 lg:p-8">
+          {/* mobile menu button */}
+          <button
+            className="lg:hidden mb-4 p-2 rounded-md bg-blue-600 text-white"
+            onClick={() => setIsSidebarOpen(true)}
+          >
+            <Menu size={20} />
+          </button>
+
           <Routes>
             <Route path="/" element={<Dashboard />} />
 

@@ -101,9 +101,11 @@ export default function Analytics() {
       : ACTIVITIES.filter((a) => a.key === activeFilter);
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-1">Analytics</h1>
-      <p className="text-gray-400 text-sm mb-8">
+    <div className="p-4 sm:p-6 max-w-5xl mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">
+        Analytics
+      </h1>
+      <p className="text-gray-400 text-sm mb-6 sm:mb-8">
         {new Date().toLocaleDateString("en-US", {
           weekday: "long",
           year: "numeric",
@@ -113,8 +115,8 @@ export default function Analytics() {
       </p>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm">
           <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide mb-1">
             Total
           </p>
@@ -123,7 +125,7 @@ export default function Analytics() {
         {ACTIVITIES.map(({ key, label, color }) => (
           <div
             key={key}
-            className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm"
+            className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-100 shadow-sm"
           >
             <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide mb-1">
               {label}
@@ -136,8 +138,8 @@ export default function Analytics() {
       </div>
 
       {/* Chart */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h2 className="text-lg font-bold text-gray-800">Activity Usage</h2>
             <p className="text-sm text-gray-400">Actions per hour · Today</p>
@@ -145,7 +147,7 @@ export default function Analytics() {
           <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => setActiveFilter("all")}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
+              className={`px-3 sm:px-4 py-1.5 rounded-full text-sm font-medium border transition-all ${
                 activeFilter === "all"
                   ? "bg-blue-500/90 text-white border-blue-500 shadow-sm"
                   : "bg-white text-gray-500 border-gray-200 hover:border-blue-300 hover:text-blue-500"
@@ -170,11 +172,11 @@ export default function Analytics() {
           </div>
         </div>
 
-        <ResponsiveContainer width="100%" height={280}>
+        <ResponsiveContainer width="100%" height={240}>
           <BarChart
             data={displayData}
-            barGap={3}
-            barCategoryGap="35%"
+            barGap={2}
+            barCategoryGap="30%"
             margin={{ top: 4, right: 4, bottom: 0, left: -20 }}
           >
             <CartesianGrid
@@ -211,16 +213,16 @@ export default function Analytics() {
       </div>
 
       {/* Breakdown */}
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6">
         <h3 className="text-base font-bold text-gray-800 mb-4">Breakdown</h3>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 sm:gap-4">
           {ACTIVITIES.map(({ key, label, color }) => {
             const count = totals[key] || 0;
             const pct =
               totalActions > 0 ? Math.round((count / totalActions) * 100) : 0;
             return (
-              <div key={key} className="flex items-center gap-4">
-                <span className="text-sm font-medium text-gray-600 w-24 shrink-0">
+              <div key={key} className="flex items-center gap-3 sm:gap-4">
+                <span className="text-sm font-medium text-gray-600 w-16 sm:w-24 shrink-0">
                   {label}
                 </span>
                 <div className="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
@@ -230,7 +232,7 @@ export default function Analytics() {
                   />
                 </div>
                 <span
-                  className="text-sm font-bold w-24 text-right"
+                  className="text-sm font-bold w-20 sm:w-24 text-right text-nowrap"
                   style={{ color }}
                 >
                   {count} · {pct}%

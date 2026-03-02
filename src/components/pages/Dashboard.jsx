@@ -57,15 +57,17 @@ function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen  p-6">
+    <div className="min-h-screen p-4 sm:p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
-        <p className="text-gray-700 mb-6">
+        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+          Dashboard
+        </h1>
+        <p className="text-gray-700 mb-6 text-sm sm:text-base">
           Welcome Back! {user?.name || "Guest"}
         </p>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 md:gap-20 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8">
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-gray-600 text-sm font-medium mb-2">
@@ -120,18 +122,18 @@ function Dashboard() {
         </div>
 
         {/* Recent Activities */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
-          <h2 className="text-[18px] font-bold text-gray-900 mb-6 flex items-center gap-2">
+        <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-200">
+          <h2 className="text-lg sm:text-[18px] font-bold text-gray-900 mb-6 flex items-center gap-2">
             <FileText size={24} />
             Recent Activities
           </h2>
 
           {activities.length > 0 ? (
-            <div className="space-y-3 text-sm">
+            <div className="space-y-2 sm:space-y-3 text-sm">
               {activities.slice(0, 10).map((activity) => (
                 <div
                   key={activity.id}
-                  className="flex items-center justify-between p-4 rounded-lg border-l-4 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 rounded-lg border-l-4 bg-gray-50 hover:bg-gray-100 transition-colors gap-2 sm:gap-4"
                   style={{
                     borderLeftColor:
                       activity.type === "created"
@@ -141,14 +143,14 @@ function Dashboard() {
                           : "#ef4444",
                   }}
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 sm:gap-4 flex-1">
                     <div
-                      className={`p-2 rounded-full ${getActivityStyle(activity.type)}`}
+                      className={`p-2 rounded-full flex-shrink-0 ${getActivityStyle(activity.type)}`}
                     >
                       {getActivityIcon(activity.type)}
                     </div>
-                    <div>
-                      <p className="font-medium text-gray-900 text-[14px]">
+                    <div className="min-w-0">
+                      <p className="font-medium text-gray-900 text-[14px] truncate">
                         <span className="capitalize">{activity.type}</span>
                         {activity.noteTitle ? `: ${activity.noteTitle}` : ""}
                       </p>
@@ -164,7 +166,7 @@ function Dashboard() {
                       </p>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-500 flex-shrink-0">
                     {new Date(activity.timestamp).toLocaleString("en-US", {
                       month: "short",
                       day: "numeric",

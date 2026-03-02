@@ -219,11 +219,11 @@ function ContentEditor() {
 
   return (
     <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto p-6">
+      <div className="max-w-7xl mx-auto p-4 sm:p-6">
         {/* Header with Search */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start mb-6 sm:mb-8 gap-4 sm:gap-0">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               My Projects
             </h1>
             <p className="text-gray-700 text-xs">
@@ -232,23 +232,23 @@ function ContentEditor() {
           </div>
 
           {/* Search Field */}
-          <div className="relative">
+          <div className="relative w-full sm:w-64">
             <Search className="absolute left-3 top-3 text-gray-400" size={18} />
             <input
               type="text"
               placeholder="Search..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 pr-4 py-2 w-64 rounded-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="pl-10 pr-4 py-2 w-full rounded-full bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
 
         {/* Category Tabs */}
-        <div className="mb-8 flex items-center gap-2 flex-wrap">
+        <div className="mb-6 sm:mb-8 flex items-center gap-2 flex-wrap">
           <button
             onClick={() => setActiveCategory("all")}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
+            className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-medium transition-all flex items-center gap-1.5 ${
               activeCategory === "all"
                 ? "bg-blue-500 text-white shadow-md"
                 : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
@@ -269,7 +269,7 @@ function ContentEditor() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-1.5 rounded-full text-xs font-medium capitalize transition-all flex items-center gap-1.5 ${
+                className={`px-3 sm:px-4 py-1.5 rounded-full text-xs font-medium capitalize transition-all flex items-center gap-1.5 ${
                   activeCategory === cat
                     ? "bg-blue-500 text-white shadow-md"
                     : "bg-white text-gray-700 hover:bg-gray-100 border border-gray-300"
@@ -283,13 +283,13 @@ function ContentEditor() {
           {!showAddCategory ? (
             <button
               onClick={() => setShowAddCategory(true)}
-              className="px-4 py-1.5 rounded-full text-xs font-medium bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 transition-all flex items-center gap-1.5"
+              className="px-3 sm:px-4 py-1.5 rounded-full text-xs font-medium bg-white text-gray-700 hover:bg-gray-100 border border-gray-300 transition-all flex items-center gap-1.5"
             >
               <PlusCircle size={14} className="text-green-600" />
               Add Category
             </button>
           ) : (
-            <div className="flex gap-2">
+            <div className="flex gap-2 flex-wrap">
               <input
                 type="text"
                 placeholder="Category name..."
@@ -315,8 +315,8 @@ function ContentEditor() {
         </div>
 
         {/* New Note Form */}
-        <div className="bg-white rounded-2xl p-6 mb-8 border border-gray-300 shadow-sm">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-gray-900">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 mb-8 border border-gray-300 shadow-sm">
+          <h2 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2 text-gray-900">
             <Plus size={20} />
             Create New Note
           </h2>
@@ -341,7 +341,7 @@ function ContentEditor() {
             placeholder="Note title..."
             value={newNote.title}
             onChange={(e) => setNewNote({ ...newNote, title: e.target.value })}
-            className="w-full mb-3 px-4 py-3 rounded-lg bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full mb-3 px-4 py-3 rounded-lg bg-white border border-gray-300 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
           />
           <textarea
             placeholder="Note content..."
@@ -353,7 +353,7 @@ function ContentEditor() {
           />
           <button
             onClick={handleNewNote}
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-all shadow-md font-medium text-sm"
+            className="w-full sm:w-auto bg-blue-600 text-white px-6 sm:px-8 py-3 rounded-lg hover:bg-blue-700 transition-all shadow-md font-medium text-sm"
           >
             Publish Note
           </button>
@@ -362,11 +362,11 @@ function ContentEditor() {
         {/* Drafts Section */}
         {drafts.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
               <FileText size={24} />
               Drafts ({drafts.length})
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {drafts.map((draft) => (
                 <div
                   key={draft.id}
@@ -396,10 +396,10 @@ function ContentEditor() {
         {Object.keys(groupedNotes).length > 0 ? (
           Object.entries(groupedNotes).map(([monthYear, monthNotes]) => (
             <div key={monthYear} className="mb-10">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6 border-b border-gray-300 pb-2">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 border-b border-gray-300 pb-2">
                 {monthYear}
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {monthNotes.map((note, index) => (
                   <NoteCard
                     key={note.id}
@@ -450,11 +450,11 @@ function NoteCard({
   if (isEditing) {
     return (
       <div className="fixed inset-0 bg-gray-900/30 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl shadow-blue-100/60 border border-blue-100 w-full max-w-2xl p-10">
+        <div className="bg-white rounded-2xl shadow-2xl shadow-blue-100/60 border border-blue-100 w-full max-w-2xl p-6 sm:p-10 max-h-[90vh] overflow-y-auto">
           {/* Header */}
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6 sm:mb-8">
             <div>
-              <h2 className="text-xl font-bold text-gray-800 tracking-tight">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-800 tracking-tight">
                 Edit Note
               </h2>
               <p className="text-xs text-gray-400 mt-1">
@@ -463,7 +463,7 @@ function NoteCard({
             </div>
             <button
               onClick={onCancel}
-              className="w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-all flex-shrink-0"
             >
               <X size={17} strokeWidth={2.5} />
             </button>
@@ -484,20 +484,20 @@ function NoteCard({
           </div>
 
           {/* Content textarea */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <label className="block text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
               Content
             </label>
             <textarea
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
-              className="w-full bg-gray-50 border border-blue-100 rounded-xl px-4 py-3 text-sm text-gray-600 placeholder-gray-300 focus:outline-none focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all min-h-[200px] resize-none leading-relaxed"
+              className="w-full bg-gray-50 border border-blue-100 rounded-xl px-4 py-3 text-sm text-gray-600 placeholder-gray-300 focus:outline-none focus:bg-white focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-all min-h-[150px] sm:min-h-[200px] resize-none leading-relaxed"
               placeholder="Write your note here..."
             />
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-col sm:flex-row">
             <button
               onClick={onCancel}
               className="flex-1 py-3 rounded-xl bg-gray-100 text-gray-500 text-sm font-semibold hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
