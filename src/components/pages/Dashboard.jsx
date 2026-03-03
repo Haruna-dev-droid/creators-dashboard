@@ -15,7 +15,19 @@ import { useApp } from "../contexts/AppContext";
 import { Eye, Users, Heart, DollarSign } from "lucide-react";
 
 function Dashboard() {
-  const { notes, activities, todo } = useApp();
+  const {
+    notes,
+    activities,
+    todo,
+    goals,
+    createGoal,
+    updateGoalProgress,
+    deleteGoal,
+    streaks,
+    createStreak,
+    deleteStreak,
+  } = useApp();
+  const [showAdd, setShowAdd] = useState(false);
   // const [activities, setActivities] = useState([]);
   // const [notes, setNotes] = useState([]);
   const { currentUser } = useAuth();
@@ -181,6 +193,53 @@ function Dashboard() {
             <p className="text-gray-500 text-center py-8">No activities yet</p>
           )}
         </div>
+      </div>
+      <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <h3 className="text-lg font-bold mb-4">Goals</h3>
+        {goals.map((goal) => (
+          <div key={goal.id} className="mb-4 p-4 bg-gray-50 rounded-lg">
+            <div className="flex justify-between items-center mb-2">
+              <span className="font-medium">{goal.title}</span>
+              <button
+                onClick={() => deleteGoal(goal.id)}
+                className="text-red-500"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div
+                className="bg-blue-500 h-2 rounded-full transition-all"
+                style={{ width: `${(goal.current / goal.target) * 100}%` }}
+              />
+            </div>
+            <p className="text-sm text-gray-600 mt-2">
+              {goal.current} / {goal.target} {goal.completed && "✓ Completed!"}
+            </p>
+          </div>
+        ))}
+      </div>
+      <div className="bg-white rounded-xl p-6 border border-gray-200">
+        <h3 className="text-lg font-bold mb-4">Streaks</h3>
+        {streaks.map((streak) => (
+          <div
+            key={streak.id}
+            className="flex items-center justify-between mb-3 p-3 bg-orange-50 rounded-lg"
+          >
+            <div>
+              <p className="font-semibold">{streak.label}</p>
+              <p className="text-2xl font-bold text-orange-600">
+                {streak.count} days
+              </p>
+            </div>
+            <button
+              onClick={() => deleteStreak(streak.id)}
+              className="text-red-500"
+            >
+              ✕
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
