@@ -76,6 +76,12 @@ export function AppProvider({ children }) {
       const loadedPosts = JSON.parse(
         localStorage.getItem(`posts_${uid}`) || "[]",
       );
+      const loadedStreaks = JSON.parse(
+        localStorage.getItem(`streaks_${uid}`) || "[]",
+      );
+      const loadedGoals = JSON.parse(
+        localStorage.getItem(`goals_${uid}`) || "[]",
+      );
       const loadedActivities = JSON.parse(
         localStorage.getItem(`activities_${uid}`) || "[]",
       );
@@ -105,10 +111,105 @@ export function AppProvider({ children }) {
         localStorage.setItem(`goals_${uid}`, JSON.stringify(resetGoals));
       }
 
+      // Handle automatic "daily login" streak on user change/login
+      try {
+        const lastLoginKey = `lastLogin_${uid}`;
+        const todayISO = getTodayDateISO();
+        const prevLogin = localStorage.getItem(lastLoginKey);
+
+        if (prevLogin !== todayISO) {
+          // user hasn't logged in today yet — record login
+          const streakIndex = loadedStreaks.findIndex(
+            (s) => s.category === "login",
+          );
+          const yesterday = getTodayDateISO(new Date(Date.now() - 86400000));
+
+          if (streakIndex >= 0) {
+            const s = loadedStreaks[streakIndex];
+            if (s.lastUpdated === todayISO) {
+              // already up-to-date
+            } else if (s.lastUpdated === yesterday) {
+              loadedStreaks[streakIndex] = {
+                ...s,
+                count: s.count + 1,
+                lastUpdated: todayISO,
+              };
+              // award goal progress for login if a matching goal exists
+              const gIndex = loadedGoals.findIndex(
+                (g) => g.category === "login",
+              );
+              if (gIndex >= 0) {
+                const g = loadedGoals[gIndex];
+                const newCurrent = (g.current || 0) + 1;
+                loadedGoals[gIndex] = {
+                  ...g,
+                  current: Math.min(newCurrent, g.target || 1),
+                  completed: newCurrent >= (g.target || 1),
+                };
+                localStorage.setItem(
+                  `goals_${uid}`,
+                  JSON.stringify(loadedGoals),
+                );
+              }
+            } else {
+              loadedStreaks[streakIndex] = {
+                ...s,
+                count: 1,
+                lastUpdated: todayISO,
+              };
+              // reset/no goal award on reset
+            }
+          } else {
+            // create a new login streak
+            loadedStreaks.push({
+              id: Date.now(),
+              label: "Daily Login",
+              count: 1,
+              category: "login",
+              lastUpdated: todayISO,
+              milestone: 7,
+            });
+            // optionally award progress to a login goal on first create
+            const gIndex = loadedGoals.findIndex((g) => g.category === "login");
+            if (gIndex >= 0) {
+              const g = loadedGoals[gIndex];
+              const newCurrent = (g.current || 0) + 1;
+              loadedGoals[gIndex] = {
+                ...g,
+                current: Math.min(newCurrent, g.target || 1),
+                completed: newCurrent >= (g.target || 1),
+              };
+              localStorage.setItem(`goals_${uid}`, JSON.stringify(loadedGoals));
+            }
+          }
+
+          localStorage.setItem(`streaks_${uid}`, JSON.stringify(loadedStreaks));
+          localStorage.setItem(lastLoginKey, todayISO);
+        }
+      } catch (e) {
+        // ignore
+      }
+
       setNotes(loadedNotes);
       setTodo(finalTodo);
       setPosts(loadedPosts);
       setActivities(finalActivities);
+      try {
+        const loadedGoalsFinal = JSON.parse(
+          localStorage.getItem(`goals_${uid}`) || "[]",
+        );
+        setGoals(loadedGoalsFinal);
+      } catch {
+        setGoals([]);
+      }
+      try {
+        const loadedStreaksFinal = JSON.parse(
+          localStorage.getItem(`streaks_${uid}`) || "[]",
+        );
+        setStreaks(loadedStreaksFinal);
+      } catch {
+        setStreaks([]);
+      }
     } catch {
       setNotes([]);
       setTodo([]);
@@ -165,6 +266,12 @@ export function AppProvider({ children }) {
 
   const deleteGoal = (goalId) => {
     setGoals((prev) => prev.filter((g) => g.id !== goalId));
+  };
+
+  const updateGoal = (goalId, updates) => {
+    setGoals((prev) =>
+      prev.map((g) => (g.id === goalId ? { ...g, ...updates } : g)),
+    );
   };
 
   // Helper: Get today's ISO date (YYYY-MM-DD)
@@ -249,6 +356,7 @@ export function AppProvider({ children }) {
         removeActivity,
         createGoal,
         updateGoalProgress,
+        updateGoal,
         deleteGoal,
         createStreak,
         deleteStreak,

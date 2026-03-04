@@ -13,6 +13,8 @@ import {
 import { useAuth } from "../contexts/ContextAuth";
 import { useApp } from "../contexts/AppContext";
 import { Eye, Users, Heart, DollarSign } from "lucide-react";
+import GoalsPanel from "../UI/GoalsPanel";
+import StreaksPanel from "../UI/StreaksPanel";
 
 function Dashboard() {
   const {
@@ -123,6 +125,17 @@ function Dashboard() {
           <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-gray-600 text-sm font-medium mb-2">
+                Login Streak
+              </h3>
+            </div>
+            <p className="text-3xl font-bold text-orange-600">
+              {streaks.find((s) => s.category === "login")?.count || 0}
+            </p>
+            <p className="text-sm text-gray-500 mt-2">Daily logins in a row</p>
+          </div>
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-gray-600 text-sm font-medium mb-2">
                 Total Activities
               </h3>
               <Activity size={24} className="text-blue-400 mb-4" />
@@ -194,52 +207,10 @@ function Dashboard() {
           )}
         </div>
       </div>
-      <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h3 className="text-lg font-bold mb-4">Goals</h3>
-        {goals.map((goal) => (
-          <div key={goal.id} className="mb-4 p-4 bg-gray-50 rounded-lg">
-            <div className="flex justify-between items-center mb-2">
-              <span className="font-medium">{goal.title}</span>
-              <button
-                onClick={() => deleteGoal(goal.id)}
-                className="text-red-500"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
-                className="bg-blue-500 h-2 rounded-full transition-all"
-                style={{ width: `${(goal.current / goal.target) * 100}%` }}
-              />
-            </div>
-            <p className="text-sm text-gray-600 mt-2">
-              {goal.current} / {goal.target} {goal.completed && "✓ Completed!"}
-            </p>
-          </div>
-        ))}
-      </div>
-      <div className="bg-white rounded-xl p-6 border border-gray-200">
-        <h3 className="text-lg font-bold mb-4">Streaks</h3>
-        {streaks.map((streak) => (
-          <div
-            key={streak.id}
-            className="flex items-center justify-between mb-3 p-3 bg-orange-50 rounded-lg"
-          >
-            <div>
-              <p className="font-semibold">{streak.label}</p>
-              <p className="text-2xl font-bold text-orange-600">
-                {streak.count} days
-              </p>
-            </div>
-            <button
-              onClick={() => deleteStreak(streak.id)}
-              className="text-red-500"
-            >
-              ✕
-            </button>
-          </div>
-        ))}
+      <div className="space-y-6">
+        {/* Goals & Streaks enhanced UI components */}
+        <GoalsPanel />
+        <StreaksPanel />
       </div>
     </div>
   );
