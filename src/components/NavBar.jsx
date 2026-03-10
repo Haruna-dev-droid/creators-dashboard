@@ -15,11 +15,11 @@ export default function ResponsiveNavbar() {
   ];
 
   return (
-    <nav className="bg-blue-500/90 ">
+    <nav className="bg-[#050A18]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <h1 className="text-2xl font-bold text-black">CrtrsHub</h1>
+          <h1 className="text-2xl font-bold text-white">CrtrsHub</h1>
 
           {/* Desktop Navigation */}
           <ul className="hidden md:flex gap-10 items-center">

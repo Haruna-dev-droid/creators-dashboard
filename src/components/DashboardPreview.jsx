@@ -44,7 +44,7 @@ export default function DashboardPreview() {
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         {/* LEFT */}
         <div>
-          <h2 className="text-4xl font-bold mb-4 text-black/90">
+          <h2 className="text-4xl font-bold mb-4 text-white/90">
             Everything creators need in one place
           </h2>
           <p className="text-gray-600 mb-8 max-w-md">
