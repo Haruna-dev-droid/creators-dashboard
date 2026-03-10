@@ -1,9 +1,9 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useApp } from "../contexts/AppContext";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-const CONTENT_TYPES = {
+// initial map of built‑in types; users can extend this at runtime
+const defaultContentTypes = {
   blog: {
     label: "Blog Post",
     dot: "bg-rose-400",
@@ -73,6 +73,53 @@ function ContentCalendar() {
   });
   const [filter, setFilter] = useState("all");
   const [selectedDate, setSelectedDate] = useState(null);
+
+  // --- custom content type support ----------------------------------
+  const [contentTypes, setContentTypes] = useState(() => {
+    try {
+      return (
+        JSON.parse(localStorage.getItem("contentTypes")) || defaultContentTypes
+      );
+    } catch {
+      return defaultContentTypes;
+    }
+  });
+
+  const deleteContentTypes = (key) => {
+    setContentTypes((prev) => {
+      const updated = { ...prev };
+      delete updated[key];
+      return updated;
+    });
+    // clear filter if the removed type was active
+    setFilter((f) => (f === key ? "all" : f));
+  };
+
+  useEffect(() => {
+    localStorage.setItem("contentTypes", JSON.stringify(contentTypes));
+  }, [contentTypes]);
+
+  const [typeModal, setTypeModal] = useState(false);
+  const [newTypeKey, setNewTypeKey] = useState("");
+  const [newTypeLabel, setNewTypeLabel] = useState("");
+
+  const saveNewType = () => {
+    const key = newTypeKey.trim().toLowerCase().replace(/\s+/g, "-");
+    if (!key || contentTypes[key]) return; // prevent duplicates/empty
+    setContentTypes((prev) => ({
+      ...prev,
+      [key]: {
+        label: newTypeLabel || key,
+        dot: "bg-green-400",
+        badge: "bg-green-50 text-green-500 border-green-200",
+      },
+    }));
+    setTypeModal(false);
+    setNewTypeKey("");
+    setNewTypeLabel("");
+  };
+
+  // ------------------------------------------------------------------
 
   const daysInMonth = getDaysInMonth(year, month);
   const firstDay = getFirstDayOfMonth(year, month);
@@ -167,20 +214,41 @@ function ContentCalendar() {
             >
               All Types
             </button>
-            {Object.entries(CONTENT_TYPES).map(([key, val]) => (
-              <button
-                key={key}
-                onClick={() => setFilter(filter === key ? "all" : key)}
-                className={`px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all flex items-center gap-1 border ${
-                  filter === key
-                    ? val.badge
-                    : "text-gray-400 border-transparent hover:text-gray-600 hover:bg-gray-100"
-                }`}
-              >
-                <span className={`w-1.5 h-1.5 rounded-full ${val.dot}`} />
-                {val.label}
-              </button>
-            ))}
+            {Object.entries(contentTypes).map(([key, val]) => {
+              const isCustom = !defaultContentTypes.hasOwnProperty(key);
+              return (
+                <div key={key} className="relative group inline-block">
+                  <button
+                    onClick={() => setFilter(filter === key ? "all" : key)}
+                    className={`px-2.5 py-1 rounded-md text-[10px] font-semibold transition-all flex items-center gap-1 border ${
+                      filter === key
+                        ? val.badge
+                        : "text-gray-400 border-transparent hover:text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${val.dot}`} />
+                    {val.label}
+                  </button>
+
+                  {isCustom && (
+                    <button
+                      onClick={() => deleteContentTypes(key)}
+                      className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-500/90 text-white text-[8px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    >
+                      <X size={8} />
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+
+            {/* quick action to create a new type */}
+            <button
+              onClick={() => setTypeModal(true)}
+              className="px-2.5 py-1 rounded-md text-[10px] font-semibold bg-gray-100 hover:bg-gray-200"
+            >
+              +
+            </button>
           </div>
         </div>
 
@@ -264,10 +332,18 @@ function ContentCalendar() {
                         <div
                           key={post.id}
                           onClick={(e) => openEdit(post, e)}
-                          className={`flex items-center gap-1 px-1 py-0.5 rounded text-[9px] font-medium cursor-pointer hover:brightness-95 transition-all group ${CONTENT_TYPES[post.type].badge}`}
+                          className={`flex items-center gap-1 px-1 py-0.5 rounded text-[9px] font-medium cursor-pointer hover:brightness-95 transition-all group ${
+                            (contentTypes[post.type] &&
+                              contentTypes[post.type].badge) ||
+                            ""
+                          }`}
                         >
                           <span
-                            className={`w-1 h-1 rounded-full flex-shrink-0 ${CONTENT_TYPES[post.type].dot}`}
+                            className={`w-1 h-1 rounded-full flex-shrink-0 ${
+                              (contentTypes[post.type] &&
+                                contentTypes[post.type].dot) ||
+                              ""
+                            }`}
                           />
                           <span className="truncate flex-1 leading-tight">
                             {post.title}
@@ -377,7 +453,7 @@ function ContentCalendar() {
                   Content Type
                 </label>
                 <div className="grid grid-cols-3 gap-1.5">
-                  {Object.entries(CONTENT_TYPES).map(([key, val]) => (
+                  {Object.entries(contentTypes).map(([key, val]) => (
                     <button
                       key={key}
                       onClick={() => setForm((f) => ({ ...f, type: key }))}
@@ -390,7 +466,7 @@ function ContentCalendar() {
                       <span className={`w-1.5 h-1.5 rounded-full ${val.dot}`} />
                       {val.label}
                     </button>
-                  ))}
+                  ))}{" "}
                 </div>
               </div>
 
@@ -447,6 +523,50 @@ function ContentCalendar() {
                 className="flex-1 py-2.5 rounded-xl bg-blue-500 text-white text-xs font-semibold hover:bg-blue-600 shadow-sm shadow-blue-200 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
               >
                 {modal === "add" ? "Add to Calendar" : "Save Changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* type-creation dialog */}
+      {typeModal && (
+        <div
+          className="fixed inset-0 bg-gray-900/30 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+          onClick={() => setTypeModal(false)}
+        >
+          <div
+            className="bg-white border border-gray-200 rounded-2xl w-full max-w-sm shadow-xl p-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-sm font-bold text-gray-800 mb-2">
+              New content type
+            </h3>
+            <input
+              value={newTypeKey}
+              onChange={(e) => setNewTypeKey(e.target.value)}
+              placeholder="slug (e.g. announcement)"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 mb-2 text-sm"
+            />
+            <input
+              value={newTypeLabel}
+              onChange={(e) => setNewTypeLabel(e.target.value)}
+              placeholder="label"
+              className="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 mb-4 text-sm"
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={() => setTypeModal(false)}
+                className="flex-1 py-2 rounded-xl bg-gray-100 text-gray-500 text-xs font-semibold hover:bg-gray-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={saveNewType}
+                disabled={!newTypeKey.trim() || !newTypeLabel.trim()}
+                className="flex-1 py-2 rounded-xl bg-blue-500 text-white text-xs font-semibold hover:bg-blue-600 disabled:opacity-30 disabled:cursor-not-allowed"
+              >
+                Add type
               </button>
             </div>
           </div>
