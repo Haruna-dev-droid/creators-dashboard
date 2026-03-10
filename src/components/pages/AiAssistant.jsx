@@ -1,19 +1,49 @@
 import React from "react";
+("use client");
+
+import { useChat } from "@ai-sdk/react";
+import { DefaultChatTransport } from "ai";
+import { useState } from "react";
 
 function AiAssistant() {
+  const { messages, sendMessage, status } = useChat({
+    transport: new DefaultChatTransport({
+      api: "/pages/api",
+    }),
+  });
+  const [input, setInput] = useState("");
+
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">AI Assistant</h1>
-      <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-        <h2 className="text-xl font-semibold mb-4">Performance Metrics</h2>
-        <p className="text-gray-600">
-          Detailed analytics and insights about your content performance.
-        </p>
-        <div className="mt-6 h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-          <p className="text-gray-500">Chart visualization would go here</p>
+    <>
+      {messages.map((message) => (
+        <div key={message.id}>
+          {message.role === "user" ? "User: " : "AI: "}
+          {message.parts.map((part, index) =>
+            part.type === "text" ? <span key={index}>{part.text}</span> : null,
+          )}
         </div>
-      </div>
-    </div>
+      ))}
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (input.trim()) {
+            sendMessage({ text: input });
+            setInput("");
+          }
+        }}
+      >
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          disabled={status !== "ready"}
+          placeholder="Say something..."
+        />
+        <button type="submit" disabled={status !== "ready"}>
+          Submit
+        </button>
+      </form>
+    </>
   );
 }
 

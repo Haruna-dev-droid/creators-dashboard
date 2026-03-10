@@ -22,7 +22,7 @@ import Todo from "../pages/Todo";
 
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const user = currentUser;
   const navItems = [
     {
@@ -59,6 +59,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
       path: "/dashboardrouter/aiassistant",
     },
   ];
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error during logout:", error);
+    }
+  };
 
   return (
     <aside
@@ -134,6 +142,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
               <p className="text-xs text-white/60">Creator</p>
             </div>
           </div>
+          <button
+            onClick={handleLogout}
+            className="
+          transition-all text-white text-[10px] mt-5 font-medium"
+          >
+            Logout
+          </button>
         </div>
       )}
     </aside>
