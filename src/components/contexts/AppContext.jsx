@@ -63,6 +63,28 @@ export function AppProvider({ children }) {
     }
   });
 
+  const [theme, setTheme] = useState(() => {
+    const stored = localStorage.getItem("kreators_theme");
+    if (stored === "light" || stored === "dark") return stored;
+    if (typeof window !== "undefined") {
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      return prefersDark ? "dark" : "light";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("kreators_theme", theme);
+    document.documentElement.classList.toggle("theme-dark", theme === "dark");
+    document.documentElement.classList.toggle("theme-light", theme === "light");
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   // Re-load when user changes (login/logout)
   useEffect(() => {
     const uid = currentUser?.id || "guest";
@@ -360,6 +382,8 @@ export function AppProvider({ children }) {
         deleteGoal,
         createStreak,
         deleteStreak,
+        theme,
+        toggleTheme,
       }}
     >
       {children}
